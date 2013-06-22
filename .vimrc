@@ -285,6 +285,7 @@ endif " has("autocmd")
     let g:session_autoload="no"
     let g:session_autosave="no"
 "}
+"
 ""omnicppComplete {
     "let OmniCpp_MayCompleteDot = 1 " autocomplete with .
     "let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
