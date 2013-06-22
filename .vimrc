@@ -58,7 +58,7 @@ endif " has("autocmd")
     call vundle#rc()
     Bundle 'L9'
     Bundle 'a.vim'
-    Bundle 'AutoComplPop'
+    "Bundle 'AutoComplPop'
     Bundle 'ctrlp.vim'
     Bundle 'DoxygenToolkit.vim'
     Bundle 'The-NERD-Commenter'
@@ -79,8 +79,11 @@ endif " has("autocmd")
     Bundle 'tomasr/molokai'
     Bundle 'ZenCoding.vim'
     Bundle 'TagHighlight'
-    Bundle 'OmniCppComplete'
+    "Bundle 'OmniCppComplete'
     Bundle 'tacahiroy/ctrlp-funky'
+    Bundle 'Valloric/YouCompleteMe'
+    Bundle 'Lokaltog/vim-easymotion'
+    Bundle 'Raimondi/delimitMate'
 "}
 "common {
     "call pathogen#infect()
@@ -104,7 +107,11 @@ endif " has("autocmd")
     "set guifont=MyFont_for_Powerline
     "set guifont=Consolas_for_Powerline:h12:cANSI
     syntax enable
-    colorscheme solarized
+    if has("gui_running")
+        colorscheme solarized
+    else 
+        colorscheme molokai
+    endif
     "colorscheme molokai
     set background=dark
     "if has("gui_running") 
@@ -132,6 +139,7 @@ endif " has("autocmd")
     nmap <C-j> <C-w>j 
     nmap <C-k> <C-w>k 
     nmap <C-l> <C-w>l 
+    nnoremap <leader>oa gg<S-v>G
 
     autocmd BufEnter * lcd %:p:h
 "}
@@ -274,14 +282,14 @@ endif " has("autocmd")
     let g:html_indent_style1 = "inc"
 "}
 "vim-session {
-    let g:session_autoload="yes"
-    let g:session_autosave="yes"
+    let g:session_autoload="no"
+    let g:session_autosave="no"
 "}
-"omnicppComplete {
-    let OmniCpp_MayCompleteDot = 1 " autocomplete with .
-    let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
-    let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
-    let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
-    let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
-    let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window   
-"}
+""omnicppComplete {
+    "let OmniCpp_MayCompleteDot = 1 " autocomplete with .
+    "let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
+    "let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
+    "let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
+    "let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
+    "let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window   
+""}
