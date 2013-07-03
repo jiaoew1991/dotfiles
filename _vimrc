@@ -282,7 +282,6 @@ endif " has("autocmd")
 "}
 "easymotion {   
     "let g:EasyMotion_mapping_f="<C-m>"
-    "let g:EasyMotion_mapping_w="<leader><leader>"
 "}
 "omnicppComplete {
     let OmniCpp_MayCompleteDot = 1 " autocomplete with .
