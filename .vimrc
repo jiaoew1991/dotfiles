@@ -26,16 +26,16 @@ function MyDiff()
 endfunction
 
 
-if(has("win32") || has("win95") || has("win64") || has("win16")) "判定当前操作系统类型
+if(has("win32") || has("win95") || has("win64") || has("win16")) 
     let g:iswindows=1
 else
     let g:iswindows=0
 endif
 autocmd!
-set nocompatible "不要vim模仿vi模式，建议设置，否则会有很多不兼容的问题
+set nocompatible
 syntax on"打开高亮
 if has("autocmd")
-    filetype plugin indent on "根据文件进行缩进
+    filetype plugin indent on
     filetype plugin on
     augroup vimrcEx
         au!
@@ -46,7 +46,6 @@ if has("autocmd")
                     \ endif
     augroup END
 else
-    "智能缩进，相应的有cindent，官方说autoindent可以支持各种文件的缩进，但是效果会比只支持C/C++的cindent效果会差一点，但笔者并没有看出来
     set autoindent " always set autoindenting on 
 endif " has("autocmd")
 "vbundle {
@@ -58,7 +57,7 @@ endif " has("autocmd")
     call vundle#rc()
     Bundle 'L9'
     Bundle 'a.vim'
-    "Bundle 'AutoComplPop'
+    Bundle 'AutoComplPop'
     Bundle 'ctrlp.vim'
     Bundle 'DoxygenToolkit.vim'
     Bundle 'The-NERD-Commenter'
@@ -81,12 +80,13 @@ endif " has("autocmd")
     Bundle 'TagHighlight'
     "Bundle 'OmniCppComplete'
     Bundle 'tacahiroy/ctrlp-funky'
+    Bundle 'scrooloose/syntastic'
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'Lokaltog/vim-easymotion'
     Bundle 'Raimondi/delimitMate'
+    "Bundle 'tpope/vim-fugitive'
 "}
 "common {
-    "call pathogen#infect()
     set encoding=utf-8
     au BufWritePre set fileencoding=utf-8
     set fileencodings=utf-8,latin1
@@ -110,30 +110,27 @@ endif " has("autocmd")
     if has("gui_running")
         colorscheme solarized
     else 
-        colorscheme molokai
+        colorscheme desert
     endif
-    "colorscheme molokai
     set background=dark
-    "if has("gui_running") 
-    set guioptions-=m " 隐藏菜单栏 
-    set guioptions-=T " 隐藏工具栏 
-    set guioptions-=L " 隐藏左侧滚动条 
-    set guioptions-=r " 隐藏右侧滚动条 
-    set guioptions-=b " 隐藏底部滚动条 
-    "set showtabline=0 " 隐藏Tab栏 
-    "endif 
-    "set nowrap "不自动换行
-    set hlsearch "高亮显示结果
-    set incsearch "在输入要搜索的文字时，vim会实时匹配
-    set backspace=indent,eol,start whichwrap+=<,>,[,] "允许退格键的使用
+    if has("gui_running") 
+        set guioptions-=m 
+        set guioptions-=T 
+        set guioptions-=L 
+        set guioptions-=r 
+        set guioptions-=b 
+    endif 
+    set hlsearch 
+    set incsearch 
+    set backspace=indent,eol,start whichwrap+=<,>,[,] 
     let mapleader=","
 
-    "set foldenable              " 开始折叠 
-    "set foldmethod=syntax       " 设置语法折叠 
-    "set foldcolumn=0            " 设置折叠区域的宽度 
-    "setlocal foldlevel=1        " 设置折叠层数为 
+    "set foldenable             
+    "set foldmethod=syntax      
+    "set foldcolumn=0           
+    "setlocal foldlevel=1       
     "set foldmethod=indent 
-    "set foldexpr=1 		    "设置代码块折叠后显示的行数 
+    "set foldexpr=1 		    
 
     nmap <C-h> <C-w>h 
     nmap <C-j> <C-w>j 
@@ -148,25 +145,24 @@ endif " has("autocmd")
 	nmap <leader>nt :NERDTreeFind<cr>
 	let NERDTreeShowBookmarks=1
 	let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-        let NERDTreeChDirMode=0
-        let NERDTreeQuitOnOpen=1
-        let NERDTreeMouseMode=2
-        let NERDTreeShowHidden=1
-        let NERDTreeKeepTreeInNewTab=1
-        let g:nerdtree_tabs_open_on_gui_startup=0
+    let NERDTreeChDirMode=0
+    let NERDTreeQuitOnOpen=1
+    let NERDTreeMouseMode=2
+    let NERDTreeShowHidden=1
+    let NERDTreeKeepTreeInNewTab=1
+    let g:nerdtree_tabs_open_on_gui_startup=0
 "}
 "powerline{
 	set laststatus=2
 	set t_Co=256
-    "let g:Powerline_symbols='fancy'
 "}
 "taglist{
-	let Tlist_Show_One_File = 1            "只显示当前文件的taglist，默认是显示多个
-	let Tlist_Exit_OnlyWindow = 1          "如果taglist是最后一个窗口，则退出vim
-	let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist
-	let Tlist_GainFocus_On_ToggleOpen = 1  "打开taglist时，光标保留在taglist窗口
-	let Tlist_Ctags_Cmd='ctags'  	       "设置ctags命令的位置
-	nnoremap <leader>tl :Tlist<CR>         "设置关闭和打开taglist窗口的快捷键
+	let Tlist_Show_One_File = 1            
+	let Tlist_Exit_OnlyWindow = 1          
+	let Tlist_Use_Right_Window = 1         
+	let Tlist_GainFocus_On_ToggleOpen = 1  
+	let Tlist_Ctags_Cmd='ctags'  	       
+	nnoremap <leader>tl :Tlist<CR>        
 "}
 "Tagbar {
     nnoremap <silent> <F9> :TagbarToggle<CR>
@@ -245,7 +241,6 @@ endif " has("autocmd")
 	let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
 	let g:DoxygenToolkit_blockFooter="--------------------------------------------------------------------------"
 	let g:DoxygenToolkit_authorName="jiaoew"
-	"let g:DoxygenToolkit_licenseTag="My own license" 
 "}
 "ZenCoding{
 	let g:user_zen_settings = {
@@ -282,10 +277,13 @@ endif " has("autocmd")
     let g:html_indent_style1 = "inc"
 "}
 "vim-session {
-    let g:session_autoload="no"
-    let g:session_autosave="no"
+    let g:session_autoload="yes"
+    let g:session_autosave="yes"
 "}
-"
+"easymotion {   
+    "let g:EasyMotion_mapping_f="<C-m>"
+    "let g:EasyMotion_mapping_w="<leader><leader>"
+"}
 ""omnicppComplete {
     "let OmniCpp_MayCompleteDot = 1 " autocomplete with .
     "let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
@@ -294,3 +292,8 @@ endif " has("autocmd")
     "let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
     "let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window   
 ""}
+"youcompleteme {
+    "let g:ycm_autoclose_preview_window_after_completion=1
+    let g:ycm_key_list_select_completion=['<CR>', '<C-n>']
+    let g:ycm_key_invoke_completion = '<a-/>'
+"}
