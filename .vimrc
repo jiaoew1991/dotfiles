@@ -84,6 +84,7 @@ endif " has("autocmd")
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'Lokaltog/vim-easymotion'
     Bundle 'Raimondi/delimitMate'
+    Bundle 'Yggdroot/indentLine'
     "Bundle 'tpope/vim-fugitive'
 "}
 "common {
@@ -113,13 +114,13 @@ endif " has("autocmd")
         colorscheme desert
     endif
     set background=dark
-    if has("gui_running") 
-        set guioptions-=m 
-        set guioptions-=T 
-        set guioptions-=L 
-        set guioptions-=r 
-        set guioptions-=b 
-    endif 
+    "if has("gui_running") 
+    set guioptions-=m 
+    set guioptions-=T 
+    set guioptions-=L 
+    set guioptions-=r 
+    set guioptions-=b 
+    "endif 
     set hlsearch 
     set incsearch 
     set backspace=indent,eol,start whichwrap+=<,>,[,] 
@@ -155,6 +156,7 @@ endif " has("autocmd")
 "powerline{
 	set laststatus=2
 	set t_Co=256
+    "let g:Powerline_symbols='fancy'
 "}
 "taglist{
 	let Tlist_Show_One_File = 1            
@@ -280,6 +282,7 @@ endif " has("autocmd")
     let g:session_autoload="yes"
     let g:session_autosave="yes"
 "}
+"
 "easymotion {   
     "let g:EasyMotion_mapping_f="<C-m>"
     "let g:EasyMotion_mapping_w="<leader><leader>"
