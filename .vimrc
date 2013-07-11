@@ -1,3 +1,6 @@
+let $VIMRUNTIME="/usr/share/vim/vim74a"
+set runtimepath=/usr/share/vim/vim74a
+
 if (has("win32"))
     set diffexpr=MyDiff()
 endif
@@ -33,7 +36,7 @@ else
 endif
 autocmd!
 set nocompatible
-syntax on"´ò¿ª¸ßÁÁ
+syntax on
 if has("autocmd")
     filetype plugin indent on
     filetype plugin on
@@ -57,34 +60,43 @@ endif " has("autocmd")
     call vundle#rc()
     Bundle 'L9'
     Bundle 'a.vim'
-    Bundle 'AutoComplPop'
     Bundle 'ctrlp.vim'
+    Bundle 'tacahiroy/ctrlp-funky'
     Bundle 'DoxygenToolkit.vim'
     Bundle 'The-NERD-Commenter'
+    "for beauty{
     Bundle 'Lokaltog/vim-powerline'
-    Bundle 'snipMate'
+    Bundle 'Yggdroot/indentLine'
+    "}
     Bundle 'Tagbar'
     Bundle 'taglist.vim'
-    Bundle 'verilog.vim'
-    Bundle 'altercation/vim-colors-solarized'
-    Bundle 'jade.vim'
-    Bundle 'tomtom/tlib_vim'
-    Bundle 'xolox/vim-misc'
-    Bundle 'MarcWeber/vim-addon-mw-utils'
-    Bundle 'honza/vim-snippets'
     Bundle 'scrooloose/nerdtree'
-    Bundle 'pangloss/vim-javascript'
-    Bundle 'xolox/vim-session'
+
+    Bundle 'altercation/vim-colors-solarized'
     Bundle 'tomasr/molokai'
+    Bundle 'xolox/vim-misc'
+    "snipmate usage {
+    Bundle 'MarcWeber/vim-addon-mw-utils'
+    Bundle 'tomtom/tlib_vim'
+    Bundle 'garbas/vim-snipmate'
+    "}
+    "snippets source 
+    Bundle 'honza/vim-snippets'
     Bundle 'ZenCoding.vim'
+
+    Bundle 'xolox/vim-session'
     Bundle 'TagHighlight'
-    "Bundle 'OmniCppComplete'
-    Bundle 'tacahiroy/ctrlp-funky'
     Bundle 'scrooloose/syntastic'
+    Bundle 'AutoComplPop'
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'Lokaltog/vim-easymotion'
     Bundle 'Raimondi/delimitMate'
-    Bundle 'Yggdroot/indentLine'
+    "for specific files {
+    Bundle 'pangloss/vim-javascript'
+    Bundle 'jade.vim'
+    Bundle 'Jinja'
+    Bundle 'verilog.vim'
+    "}
     "Bundle 'tpope/vim-fugitive'
 "}
 "common {
@@ -282,11 +294,6 @@ endif " has("autocmd")
     let g:session_autoload="yes"
     let g:session_autosave="yes"
 "}
-"
-"easymotion {   
-    "let g:EasyMotion_mapping_f="<C-m>"
-    "let g:EasyMotion_mapping_w="<leader><leader>"
-"}
 ""omnicppComplete {
     "let OmniCpp_MayCompleteDot = 1 " autocomplete with .
     "let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
@@ -297,6 +304,9 @@ endif " has("autocmd")
 ""}
 "youcompleteme {
     "let g:ycm_autoclose_preview_window_after_completion=1
-    let g:ycm_key_list_select_completion=['<CR>', '<C-n>']
-    let g:ycm_key_invoke_completion = '<a-/>'
+    let g:ycm_key_list_select_completion=['<Down>']
+    let g:ycm_key_list_previous_completion=['<Up>']
+"}
+"snipmate {
+    let g:snip_author="jiaoew"
 "}
