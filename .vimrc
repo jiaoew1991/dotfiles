@@ -1,5 +1,6 @@
 let $VIMRUNTIME="/usr/share/vim/vim74a"
 set runtimepath=/usr/share/vim/vim74a
+set helpfile=$VIMRUNTIME/doc/help.txt
 
 if (has("win32"))
     set diffexpr=MyDiff()
@@ -72,22 +73,27 @@ endif " has("autocmd")
     Bundle 'taglist.vim'
     Bundle 'scrooloose/nerdtree'
 
+    "colorscheme and highlight{
     Bundle 'altercation/vim-colors-solarized'
     Bundle 'tomasr/molokai'
+    Bundle 'chriskempson/tomorrow-theme'
+    Bundle 'TagHighlight'
+    "}"
     Bundle 'xolox/vim-misc'
     "snipmate usage {
     Bundle 'MarcWeber/vim-addon-mw-utils'
     Bundle 'tomtom/tlib_vim'
     Bundle 'garbas/vim-snipmate'
+    Bundle 'honza/vim-snippets'
     "}
     "snippets source 
-    Bundle 'honza/vim-snippets'
-    Bundle 'ZenCoding.vim'
+    Bundle 'Emmet.vim'
+    Bundle 'tpope/vim-surround'
+    Bundle 'tpope/vim-repeat'
 
     Bundle 'xolox/vim-session'
-    Bundle 'TagHighlight'
     Bundle 'scrooloose/syntastic'
-    Bundle 'AutoComplPop'
+    "Bundle 'AutoComplPop'
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'Lokaltog/vim-easymotion'
     Bundle 'Raimondi/delimitMate'
@@ -97,7 +103,6 @@ endif " has("autocmd")
     Bundle 'Jinja'
     Bundle 'verilog.vim'
     "}
-    "Bundle 'tpope/vim-fugitive'
 "}
 "common {
     set encoding=utf-8
@@ -182,7 +187,6 @@ endif " has("autocmd")
     nnoremap <silent> <F9> :TagbarToggle<CR>
 "}
 "ctags and cscope{
-    set tags+=$VIM/vimfiles/tags/stl_tags
 	map <C-F12> :call Do_CsTag()<CR>
 	nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
 	nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -249,11 +253,8 @@ endif " has("autocmd")
 	endfunction
 "}
 "DoxygenToolkit {
-	let g:DoxygenToolkit_briefTag_pre="@Synopsis   "
-	let g:DoxygenToolkit_paramTag_pre="@Param   "
-	let g:DoxygenToolkit_returnTag="@Returns   "
-	let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
-	let g:DoxygenToolkit_blockFooter="--------------------------------------------------------------------------"
+	let g:DoxygenToolkit_paramTag_pre="@param   "
+	let g:DoxygenToolkit_returnTag="@returns   "
 	let g:DoxygenToolkit_authorName="jiaoew"
 "}
 "ZenCoding{
@@ -306,6 +307,11 @@ endif " has("autocmd")
     "let g:ycm_autoclose_preview_window_after_completion=1
     let g:ycm_key_list_select_completion=['<Down>']
     let g:ycm_key_list_previous_completion=['<Up>']
+    let g:ycm_autoclose_preview_window_after_completion = 1
+    let g:ycm_autoclose_preview_window_after_insertion = 1
+    let g:ycm_collect_identifiers_from_tags_files = 1
+    nmap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    
 "}
 "snipmate {
     let g:snip_author="jiaoew"
