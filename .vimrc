@@ -1,5 +1,3 @@
-let $VIMRUNTIME="/usr/share/vim/vim74a"
-set runtimepath=/usr/share/vim/vim74a
 set helpfile=$VIMRUNTIME/doc/help.txt
 
 if (has("win32"))
@@ -65,16 +63,19 @@ endif " has("autocmd")
     Bundle 'tacahiroy/ctrlp-funky'
     Bundle 'DoxygenToolkit.vim'
     Bundle 'The-NERD-Commenter'
+    " detect file encoding
+    Bundle 'mbbill/fencview'
     "for beauty{
     Bundle 'Lokaltog/vim-powerline'
     Bundle 'Yggdroot/indentLine'
     "}
     Bundle 'Tagbar'
-    Bundle 'taglist.vim'
     Bundle 'scrooloose/nerdtree'
 
     "colorscheme and highlight{
     Bundle 'altercation/vim-colors-solarized'
+    Bundle 'joedicastro/vim-molokai256'
+    Bundle 'nielsmadan/harlequin'
     Bundle 'tomasr/molokai'
     Bundle 'chriskempson/tomorrow-theme'
     Bundle 'TagHighlight'
@@ -90,14 +91,20 @@ endif " has("autocmd")
     Bundle 'Emmet.vim'
     Bundle 'tpope/vim-surround'
     Bundle 'tpope/vim-repeat'
+    " git {
+    Bundle 'tpope/vim-fugitive'
+    " }
 
     Bundle 'xolox/vim-session'
     Bundle 'scrooloose/syntastic'
     "Bundle 'AutoComplPop'
     Bundle 'Valloric/YouCompleteMe'
-    Bundle 'Lokaltog/vim-easymotion'
     Bundle 'Raimondi/delimitMate'
+
+    Bundle 'mileszs/ack.vim'
+    Bundle 'Lokaltog/vim-easymotion'
     "for specific files {
+    "Bundle 'skammer/vim-css-color'
     Bundle 'pangloss/vim-javascript'
     Bundle 'jade.vim'
     Bundle 'Jinja'
@@ -265,10 +272,10 @@ endif " has("autocmd")
 "ctrlp {
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_switch_buffer = 't'
-    "nnoremap <silent> <D-t> :CtrlP<CR>
     let g:ctrlp_mruf_include = '\.java$\|\.js$|\.cpp$'
     nnoremap <silent> <A-r> :CtrlPMRU<CR>
     nnoremap <silent> <A-p> :CtrlPBuffer<CR>
+    nnoremap <leader>fb :CtrlPBuffer<CR>
     let g:ctrlp_custom_ignore = {
         \ 'dir':  '\.git$\|\.hg$\|\.svn$',
         \ 'file': '\.exe$\|\.so$\|\.dll$' }
@@ -310,6 +317,7 @@ endif " has("autocmd")
     let g:ycm_autoclose_preview_window_after_completion = 1
     let g:ycm_autoclose_preview_window_after_insertion = 1
     let g:ycm_collect_identifiers_from_tags_files = 1
+    let g:ycm_extra_conf_globlist = ['~/ficus/*']
     nmap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
     
 "}
