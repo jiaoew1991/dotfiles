@@ -105,6 +105,8 @@ endif " has("autocmd")
     Bundle 'Lokaltog/vim-easymotion'
     "for specific files {
     "Bundle 'skammer/vim-css-color'
+    Bundle 'othree/javascript-libraries-syntax.vim'
+    Bundle 'marijnh/tern_for_vim'
     Bundle 'pangloss/vim-javascript'
     Bundle 'jade.vim'
     Bundle 'Jinja'
@@ -149,13 +151,6 @@ endif " has("autocmd")
     set incsearch 
     set backspace=indent,eol,start whichwrap+=<,>,[,] 
     let mapleader=","
-
-    "set foldenable             
-    "set foldmethod=syntax      
-    "set foldcolumn=0           
-    "setlocal foldlevel=1       
-    "set foldmethod=indent 
-    "set foldexpr=1 		    
 
     nmap <C-h> <C-w>h 
     nmap <C-j> <C-w>j 
@@ -302,14 +297,6 @@ endif " has("autocmd")
     let g:session_autoload="yes"
     let g:session_autosave="yes"
 "}
-""omnicppComplete {
-    "let OmniCpp_MayCompleteDot = 1 " autocomplete with .
-    "let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
-    "let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
-    "let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
-    "let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
-    "let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window   
-""}
 "youcompleteme {
     "let g:ycm_autoclose_preview_window_after_completion=1
     let g:ycm_key_list_select_completion=['<Down>']
@@ -324,3 +311,10 @@ endif " has("autocmd")
 "snipmate {
     let g:snip_author="jiaoew"
 "}
+" javascipt syntax {
+    autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
+    autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 0
+    autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
+    autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
+    autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 0
+" }
