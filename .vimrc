@@ -1,5 +1,3 @@
-set helpfile=$VIMRUNTIME/doc/help.txt
-
 if (has("win32"))
     set diffexpr=MyDiff()
 endif
@@ -97,7 +95,6 @@ endif " has("autocmd")
 
     Bundle 'xolox/vim-session'
     Bundle 'scrooloose/syntastic'
-    "Bundle 'AutoComplPop'
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'Raimondi/delimitMate'
 
@@ -137,8 +134,9 @@ endif " has("autocmd")
     if has("gui_running")
         colorscheme solarized
     else 
-        colorscheme desert
+        colorscheme harlequin
     endif
+    colorscheme harlequin
     set background=dark
     "if has("gui_running") 
     set guioptions-=m 
@@ -159,6 +157,16 @@ endif " has("autocmd")
     nnoremap <leader>oa gg<S-v>G
 
     autocmd BufEnter * lcd %:p:h
+    if &term =~ "xterm\\|rxvt"
+        " use an orange cursor in insert mode
+        left &t_SI = "\<Esc>]12;green\x7"
+        " use a red cursor otherwise
+        let &t_EI = "\<Esc>]12;red\x7"
+        silent !echo -ne "\033]12;red\007"
+        " reset cursor when vim exits
+        autocmd VimLeave * silent !echo -ne "\033]112\007"
+        " use \003]12;gray\007 for gnome-terminal
+    endif
 "}
 "NERDTree {
 	map <C-e> :NERDTreeToggle<cr>:NERDTreeMirror<cr>
@@ -176,14 +184,6 @@ endif " has("autocmd")
 	set laststatus=2
 	set t_Co=256
     "let g:Powerline_symbols='fancy'
-"}
-"taglist{
-	let Tlist_Show_One_File = 1            
-	let Tlist_Exit_OnlyWindow = 1          
-	let Tlist_Use_Right_Window = 1         
-	let Tlist_GainFocus_On_ToggleOpen = 1  
-	let Tlist_Ctags_Cmd='ctags'  	       
-	nnoremap <leader>tl :Tlist<CR>        
 "}
 "Tagbar {
     nnoremap <silent> <F9> :TagbarToggle<CR>
@@ -317,4 +317,8 @@ endif " has("autocmd")
     autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
     autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
     autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 0
+" }
+" tern for vim {
+    nnoremap <leader>td :TernDef<CR>
+    nnoremap <leader>tr :TernRefs<CR>
 " }
