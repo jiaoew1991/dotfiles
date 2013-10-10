@@ -50,9 +50,9 @@ else
 endif " has("autocmd")
 "vbundle {
     if g:iswindows
-        set rtp+=$VIM/vimfiles/bundle/vundle/
+        set rtp+=$VIM/vimfiles/vundle/
     else    
-        set rtp+=~/.vim/bundle/vundle/
+        set rtp+=~/.vim/vundle/
     endif
     call vundle#rc()
     Bundle 'L9'
@@ -75,7 +75,6 @@ endif " has("autocmd")
     Bundle 'joedicastro/vim-molokai256'
     Bundle 'nielsmadan/harlequin'
     Bundle 'tomasr/molokai'
-    Bundle 'chriskempson/tomorrow-theme'
     Bundle 'TagHighlight'
     "}"
     Bundle 'xolox/vim-misc'
@@ -101,7 +100,6 @@ endif " has("autocmd")
     Bundle 'mileszs/ack.vim'
     Bundle 'Lokaltog/vim-easymotion'
     "for specific files {
-    "Bundle 'skammer/vim-css-color'
     Bundle 'othree/javascript-libraries-syntax.vim'
     Bundle 'marijnh/tern_for_vim'
     Bundle 'pangloss/vim-javascript'
@@ -111,8 +109,10 @@ endif " has("autocmd")
     "}
 "}
 "common {
-    set encoding=utf-8
-    au BufWritePre set fileencoding=utf-8
+    if !g:iswindows
+        set encoding=utf-8
+        au BufWritePre set fileencoding=utf-8
+    endif
     set fileencodings=utf-8,latin1
     set sw=4
     set ts=4
@@ -122,17 +122,17 @@ endif " has("autocmd")
     set autochdir
     set ru
     set number
-    if (has("win32"))
-        set guifont=Courier_New:h12:cANSI
-        set guifontwide=youYuan:h12:cGB2312
-    else 
-        set guifont=Courier\ New\ 12
-    endif
     "set guifont=MyFont_for_Powerline
     "set guifont=Consolas_for_Powerline:h12:cANSI
     syntax enable
     if has("gui_running")
         colorscheme solarized
+        if (has("win32"))
+            set guifont=Courier_New:h12:cANSI
+            set guifontwide=youYuan:h12:cGB2312
+        else 
+            set guifont=Courier\ New\ 12
+        endif
     else 
         colorscheme harlequin
     endif
@@ -237,7 +237,6 @@ endif " has("autocmd")
 		endif
 	    endif
 	    if(executable('ctags'))
-		"silent! execute "!ctags -R --c-types=+p --fields=+S *"
 		silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
 	    endif
 	    if(executable('cscope') && has("cscope") )
