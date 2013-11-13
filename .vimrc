@@ -136,7 +136,6 @@ endif " has("autocmd")
     else 
         colorscheme harlequin
     endif
-    colorscheme harlequin
     set background=dark
     "if has("gui_running") 
     set guioptions-=m 
@@ -303,9 +302,16 @@ endif " has("autocmd")
     let g:ycm_autoclose_preview_window_after_completion = 1
     let g:ycm_autoclose_preview_window_after_insertion = 1
     let g:ycm_collect_identifiers_from_tags_files = 1
-    let g:ycm_extra_conf_globlist = ['~/ficus/*']
+    let g:ycm_extra_conf_globlist = ['~/workspace/practice/.ycm_extra_conf.py']
     nmap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
     
+"}
+"syntastic { 
+    let g:syntastic_error_symbol = '✗'
+    let g:syntastic_warning_symbol = 'w'
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_python_checkers = ['flake8']
+    let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 "}
 "snipmate {
     let g:snip_author="jiaoew"
