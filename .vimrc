@@ -122,13 +122,11 @@ endif " has("autocmd")
     set autochdir
     set ru
     set number
-    "set guifont=MyFont_for_Powerline
-    "set guifont=Consolas_for_Powerline:h12:cANSI
     syntax enable
     if has("gui_running")
         colorscheme solarized
         if (has("win32"))
-            set guifont=Courier_New:h12:cANSI
+            set guifont=Droid Sans Mono:h12:cANSI
             set guifontwide=youYuan:h12:cGB2312
         else 
             set guifont=Courier\ New\ 12
