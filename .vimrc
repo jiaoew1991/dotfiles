@@ -94,7 +94,12 @@ endif " has("autocmd")
 
     Bundle 'xolox/vim-session'
     Bundle 'scrooloose/syntastic'
-    Bundle 'Valloric/YouCompleteMe'
+    if g:iswindows
+        Bundle 'Shougo/neocomplcache'
+        Bundle 'Shougo/neocomplcache-clang'
+    else
+        Bundle 'Valloric/YouCompleteMe'
+    endif
     Bundle 'Raimondi/delimitMate'
 
     Bundle 'mileszs/ack.vim'
@@ -126,10 +131,10 @@ endif " has("autocmd")
     if has("gui_running")
         colorscheme solarized
         if (has("win32"))
-            set guifont=Droid Sans Mono:h12:cANSI
-            set guifontwide=youYuan:h12:cGB2312
+            set guifont=Consolas:h11:cANSI
+            set guifontwide=youYuan:h11:cGB2312
         else 
-            set guifont=Courier\ New\ 12
+            set guifont=Consolas h11
         endif
     else 
         colorscheme harlequin
@@ -304,6 +309,19 @@ endif " has("autocmd")
     let g:ycm_extra_conf_globlist = ['~/ficus/*']
     nmap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
     
+"}
+"neocompletecache {
+    let g:neocomplcache_enable_at_startup=1
+    let g:neocomplcache_enable_smart_case=1
+    let g:neocomplcache_max_list=80
+    let g:neocomplcache_clang_use_library=1
+    let g:neocomplcache_clang_library_path='C:\MinGW\bin'
+	let g:neocomplcache_clang_user_options=
+    \ '-I C:\MinGW\include '.
+    \ '-I C:\MinGW\lib\gcc\mingw32\4.6.2\include '.
+    \ '-I C:\MinGW\lib\gcc\mingw32\4.6.2\include\c++ '.
+    \ '-I C:\MinGW\lib\gcc\mingw32\4.6.2\include\c++\bits '
+    let g:neocomplcache_enable_auto_delimiter=1
 "}
 "snipmate {
     let g:snip_author="jiaoew"
