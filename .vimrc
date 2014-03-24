@@ -1,29 +1,29 @@
-if (has("win32"))
-    set diffexpr=MyDiff()
-endif
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  let eq = ''
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      let cmd = '""' . $VIMRUNTIME . '\diff"'
-      let eq = '"'
-    else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-    endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-endfunction
+"if (has("win32"))
+    "set diffexpr=MyDiff()
+"endif
+"function MyDiff()
+  "let opt = '-a --binary '
+  "if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  "if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  "let arg1 = v:fname_in
+  "if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  "let arg2 = v:fname_new
+  "if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  "let arg3 = v:fname_out
+  "if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  "let eq = ''
+  "if $VIMRUNTIME =~ ' '
+    "if &sh =~ '\<cmd'
+      "let cmd = '""' . $VIMRUNTIME . '\diff"'
+      "let eq = '"'
+    "else
+      "let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    "endif
+  "else
+    "let cmd = $VIMRUNTIME . '\diff'
+  "endif
+  "silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+"endfunction
 
 
 if(has("win32") || has("win95") || has("win64") || has("win16")) 
@@ -64,10 +64,9 @@ endif " has("autocmd")
     " detect file encoding
     Bundle 'mbbill/fencview'
     "for beauty{
-    Bundle 'Lokaltog/vim-powerline'
+    Bundle 'bling/vim-airline'
     Bundle 'Yggdroot/indentLine'
     "}
-    Bundle 'Tagbar'
     Bundle 'scrooloose/nerdtree'
 
     "colorscheme and highlight{
@@ -88,24 +87,15 @@ endif " has("autocmd")
     Bundle 'Emmet.vim'
     Bundle 'tpope/vim-surround'
     Bundle 'tpope/vim-repeat'
-    " git {
-    Bundle 'tpope/vim-fugitive'
-    " }
 
-    Bundle 'xolox/vim-session'
     Bundle 'scrooloose/syntastic'
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'Raimondi/delimitMate'
+    Bundle 'marijnh/tern_for_vim'
 
-    Bundle 'mileszs/ack.vim'
     Bundle 'Lokaltog/vim-easymotion'
     "for specific files {
-    Bundle 'othree/javascript-libraries-syntax.vim'
-    Bundle 'marijnh/tern_for_vim'
-    Bundle 'pangloss/vim-javascript'
-    Bundle 'jade.vim'
     Bundle 'Jinja'
-    Bundle 'verilog.vim'
     "}
 "}
 "common {
@@ -128,8 +118,6 @@ endif " has("autocmd")
         if (has("win32"))
             set guifont=Droid Sans Mono:h12:cANSI
             set guifontwide=youYuan:h12:cGB2312
-        else 
-            set guifont=Courier\ New\ 12
         endif
     else 
         colorscheme harlequin
@@ -165,6 +153,12 @@ endif " has("autocmd")
         " use \003]12;gray\007 for gnome-terminal
     endif
 "}
+"vim-airline {
+    set laststatus=2
+    let g:airline_left_sep = '▶'
+    let g:airline_right_sep = '◀'
+
+" }
 "NERDTree {
 	map <C-e> :NERDTreeToggle<cr>:NERDTreeMirror<cr>
 	nmap <leader>nt :NERDTreeFind<cr>
@@ -177,88 +171,10 @@ endif " has("autocmd")
     let NERDTreeKeepTreeInNewTab=1
     let g:nerdtree_tabs_open_on_gui_startup=0
 "}
-"powerline{
-	set laststatus=2
-	set t_Co=256
-    "let g:Powerline_symbols='fancy'
-"}
-"Tagbar {
-    nnoremap <silent> <F9> :TagbarToggle<CR>
-"}
-"ctags and cscope{
-	map <C-F12> :call Do_CsTag()<CR>
-	nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-	nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-	nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-	nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-	nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-	nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
-	nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
-	nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-	function Do_CsTag()
-	    let dir = getcwd()
-	    if filereadable("tags")
-		if(g:iswindows==1)
-		    let tagsdeleted=delete(dir."\\"."tags")
-		else
-		    let tagsdeleted=delete("./"."tags")
-		endif
-		if(tagsdeleted!=0)
-		    echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
-		    return
-		endif
-	    endif
-	    if has("cscope")
-		silent! execute "cs kill -1"
-	    endif
-	    if filereadable("cscope.files")
-		if(g:iswindows==1)
-		    let csfilesdeleted=delete(dir."\\"."cscope.files")
-		else
-		    let csfilesdeleted=delete("./"."cscope.files")
-		endif
-		if(csfilesdeleted!=0)
-		    echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.files" | echohl None
-		    return
-		endif
-	    endif
-	    if filereadable("cscope.out")
-		if(g:iswindows==1)
-		    let csoutdeleted=delete(dir."\\"."cscope.out")
-		else
-		    let csoutdeleted=delete("./"."cscope.out")
-		endif
-		if(csoutdeleted!=0)
-		    echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.out" | echohl None
-		    return
-		endif
-	    endif
-	    if(executable('ctags'))
-		silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-	    endif
-	    if(executable('cscope') && has("cscope") )
-		if(g:iswindows!=1)
-		    silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
-		else
-		    silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
-		endif
-		silent! execute "!cscope -b"
-		execute "normal :"
-		if filereadable("cscope.out")
-		    execute "cs add cscope.out"
-		endif
-	    endif
-	endfunction
-"}
 "DoxygenToolkit {
 	let g:DoxygenToolkit_paramTag_pre="@param   "
 	let g:DoxygenToolkit_returnTag="@returns   "
 	let g:DoxygenToolkit_authorName="jiaoew"
-"}
-"ZenCoding{
-	let g:user_zen_settings = {
-	\  'lang' : 'zh',
-	\}
 "}
 "ctrlp {
     let g:ctrlp_working_path_mode = 2
@@ -271,15 +187,6 @@ endif " has("autocmd")
         \ 'dir':  '\.git$\|\.hg$\|\.svn$',
         \ 'file': '\.exe$\|\.so$\|\.dll$' }
     let g:ctrlp_extentions = ['funky']
-
-    "version control
-    "let g:ctrlp_user_command = {
-    "\ 'types': {
-        "\ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-        "\ 2: ['.hg', 'hg --cwd %s locate -i .'],
-    "\ },
-    "\ 'fallback': 'dir %s /-n /b /s /a-d' " Windows
-    "\ }
 "}
 "ctrlp-funky {
     nnoremap <leader>fp :CtrlPFunky<CR>
@@ -310,17 +217,11 @@ endif " has("autocmd")
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_python_checkers = ['flake8']
     let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
+    let g:syntastic_mode_map = { 'mode': 'passive', 'active_file': [], 'passive_file': [] }
 "}
 "snipmate {
     let g:snip_author="jiaoew"
 "}
-" javascipt syntax {
-    autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
-    autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 0
-    autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
-    autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
-    autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 0
-" }
 " tern for vim {
     nnoremap <leader>td :TernDef<CR>
     nnoremap <leader>tr :TernRefs<CR>
