@@ -45,7 +45,12 @@ endif
     Bundle 'tpope/vim-repeat'
 
     Bundle 'scrooloose/syntastic'
-    Bundle 'Valloric/YouCompleteMe'
+    if g:iswindows
+        Bundle 'Shougo/neocomplcache'
+        Bundle 'Shougo/neocomplcache-clang'
+    else
+        Bundle 'Valloric/YouCompleteMe'
+    endif
     Bundle 'Raimondi/delimitMate'
     Bundle 'marijnh/tern_for_vim'
 
