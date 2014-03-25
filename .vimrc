@@ -1,53 +1,9 @@
-"if (has("win32"))
-    "set diffexpr=MyDiff()
-"endif
-"function MyDiff()
-  "let opt = '-a --binary '
-  "if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  "if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  "let arg1 = v:fname_in
-  "if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  "let arg2 = v:fname_new
-  "if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  "let arg3 = v:fname_out
-  "if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  "let eq = ''
-  "if $VIMRUNTIME =~ ' '
-    "if &sh =~ '\<cmd'
-      "let cmd = '""' . $VIMRUNTIME . '\diff"'
-      "let eq = '"'
-    "else
-      "let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-    "endif
-  "else
-    "let cmd = $VIMRUNTIME . '\diff'
-  "endif
-  "silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-"endfunction
-
-
 if(has("win32") || has("win95") || has("win64") || has("win16")) 
     let g:iswindows=1
 else
     let g:iswindows=0
 endif
-autocmd!
-set nocompatible
-syntax on
-if has("autocmd")
-    filetype plugin indent on
-    filetype plugin on
-    augroup vimrcEx
-        au!
-        autocmd FileType text setlocal textwidth=78
-        autocmd BufReadPost *
-                    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-                    \ exe "normal! g`\"" |
-                    \ endif
-    augroup END
-else
-    set autoindent " always set autoindenting on 
-endif " has("autocmd")
+
 "vbundle {
     if g:iswindows
         set rtp+=$VIM/vimfiles/vundle/
@@ -98,11 +54,18 @@ endif " has("autocmd")
     Bundle 'Jinja'
     "}
 "}
-"common {
+augroup common
     if !g:iswindows
         set encoding=utf-8
         au BufWritePre set fileencoding=utf-8
     endif
+
+    set nocompatible
+    syntax on
+    filetype plugin indent on
+    filetype plugin on
+    set autoindent " always set autoindenting on 
+
     set fileencodings=utf-8,latin1
     set sw=4
     set ts=4
@@ -123,13 +86,13 @@ endif " has("autocmd")
         colorscheme harlequin
     endif
     set background=dark
-    "if has("gui_running") 
+
     set guioptions-=m 
     set guioptions-=T 
     set guioptions-=L 
     set guioptions-=r 
     set guioptions-=b 
-    "endif 
+
     set hlsearch 
     set incsearch 
     set backspace=indent,eol,start whichwrap+=<,>,[,] 
@@ -152,14 +115,15 @@ endif " has("autocmd")
         autocmd VimLeave * silent !echo -ne "\033]112\007"
         " use \003]12;gray\007 for gnome-terminal
     endif
-"}
-"vim-airline {
+augroup END
+
+augroup vim-airline 
     set laststatus=2
     let g:airline_left_sep = '▶'
     let g:airline_right_sep = '◀'
+augroup END
 
-" }
-"NERDTree {
+augroup NERDTree
 	map <C-e> :NERDTreeToggle<cr>:NERDTreeMirror<cr>
 	nmap <leader>nt :NERDTreeFind<cr>
 	let NERDTreeShowBookmarks=1
@@ -170,13 +134,15 @@ endif " has("autocmd")
     let NERDTreeShowHidden=1
     let NERDTreeKeepTreeInNewTab=1
     let g:nerdtree_tabs_open_on_gui_startup=0
-"}
-"DoxygenToolkit {
+augroup END
+
+augroup DoxygenToolkit
 	let g:DoxygenToolkit_paramTag_pre="@param   "
 	let g:DoxygenToolkit_returnTag="@returns   "
 	let g:DoxygenToolkit_authorName="jiaoew"
-"}
-"ctrlp {
+augroup END
+
+augroup ctrlp 
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_switch_buffer = 't'
     let g:ctrlp_mruf_include = '\.java$\|\.js$|\.cpp$'
@@ -187,21 +153,13 @@ endif " has("autocmd")
         \ 'dir':  '\.git$\|\.hg$\|\.svn$',
         \ 'file': '\.exe$\|\.so$\|\.dll$' }
     let g:ctrlp_extentions = ['funky']
-"}
-"ctrlp-funky {
+augroup END
+
+augroup ctrip-funcky
     nnoremap <leader>fp :CtrlPFunky<CR>
-"}
-"vim-javascript {
-    let g:html_indent_inctags = "html,body,head,tbody"
-    let g:html_indent_script1 = "inc"
-    let g:html_indent_style1 = "inc"
-"}
-"vim-session {
-    let g:session_autoload="yes"
-    let g:session_autosave="yes"
-"}
-"youcompleteme {
-    "let g:ycm_autoclose_preview_window_after_completion=1
+augroup END
+
+augroup youcompleteme
     let g:ycm_key_list_select_completion=['<Down>']
     let g:ycm_key_list_previous_completion=['<Up>']
     let g:ycm_autoclose_preview_window_after_completion = 1
@@ -209,20 +167,22 @@ endif " has("autocmd")
     let g:ycm_collect_identifiers_from_tags_files = 1
     let g:ycm_extra_conf_globlist = ['~/workspace/practice/.ycm_extra_conf.py']
     nmap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+augroup END
     
-"}
-"syntastic { 
+augroup syntastic
     let g:syntastic_error_symbol = '✗'
     let g:syntastic_warning_symbol = 'w'
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_python_checkers = ['flake8']
     let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
     let g:syntastic_mode_map = { 'mode': 'passive', 'active_file': [], 'passive_file': [] }
-"}
-"snipmate {
+augroup END
+
+augroup snipmate
     let g:snip_author="jiaoew"
-"}
-" tern for vim {
+augroup END
+
+augroup tern_for_vim
     nnoremap <leader>td :TernDef<CR>
     nnoremap <leader>tr :TernRefs<CR>
-" }
+augroup END
