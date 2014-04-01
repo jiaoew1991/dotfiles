@@ -57,7 +57,8 @@ endif
     Bundle 'Lokaltog/vim-easymotion'
     "for specific files {
     Bundle 'Jinja'
-    "}
+    Bundle 'derekwyatt/vim-scala'
+"}
 "}
 augroup common
     if !g:iswindows
