@@ -58,7 +58,8 @@ endif
     "for specific files {
     Bundle 'Jinja'
     Bundle 'derekwyatt/vim-scala'
-"}
+    "}
+    Bundle 'editorconfig/editorconfig-vim'
 "}
 augroup common
     if !g:iswindows
@@ -181,7 +182,7 @@ augroup syntastic
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_python_checkers = ['flake8']
     let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
-    let g:syntastic_mode_map = { 'mode': 'passive', 'active_file': [], 'passive_file': [] }
+    "let g:syntastic_mode_map = { 'mode': 'passive', 'active_file': [], 'passive_file': [] }
 augroup END
 
 augroup snipmate
