@@ -1,4 +1,4 @@
-if(has("win32") || has("win95") || has("win64") || has("win16")) 
+if(has("win32") || has("win95") || has("win64") || has("win16"))
     let g:iswindows=1
 else
     let g:iswindows=0
@@ -7,7 +7,7 @@ endif
 "vbundle {
     if g:iswindows
         set rtp+=$VIM/vimfiles/vundle/
-    else    
+    else
         set rtp+=~/.vim/vundle/
     endif
     call vundle#rc()
@@ -39,7 +39,7 @@ endif
     Bundle 'garbas/vim-snipmate'
     Bundle 'honza/vim-snippets'
     "}
-    "snippets source 
+    "snippets source
     Bundle 'Emmet.vim'
     Bundle 'tpope/vim-surround'
     Bundle 'tpope/vim-repeat'
@@ -71,7 +71,7 @@ augroup common
     syntax on
     filetype plugin indent on
     filetype plugin on
-    set autoindent " always set autoindenting on 
+    set autoindent " always set autoindenting on
 
     set fileencodings=utf-8,latin1
     set sw=4
@@ -89,26 +89,26 @@ augroup common
             set guifont=Droid Sans Mono:h12:cANSI
             set guifontwide=youYuan:h12:cGB2312
         endif
-    else 
+    else
         colorscheme harlequin
     endif
     set background=dark
 
-    set guioptions-=m 
-    set guioptions-=T 
-    set guioptions-=L 
-    set guioptions-=r 
-    set guioptions-=b 
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions-=L
+    set guioptions-=r
+    set guioptions-=b
 
-    set hlsearch 
-    set incsearch 
-    set backspace=indent,eol,start whichwrap+=<,>,[,] 
+    set hlsearch
+    set incsearch
+    set backspace=indent,eol,start whichwrap+=<,>,[,]
     let mapleader=","
 
-    nmap <C-h> <C-w>h 
-    nmap <C-j> <C-w>j 
-    nmap <C-k> <C-w>k 
-    nmap <C-l> <C-w>l 
+    nmap <C-h> <C-w>h
+    nmap <C-j> <C-w>j
+    nmap <C-k> <C-w>k
+    nmap <C-l> <C-w>l
     nnoremap <leader>oa gg<S-v>G
 
     autocmd BufEnter * lcd %:p:h
@@ -124,10 +124,14 @@ augroup common
     endif
 augroup END
 
-augroup vim-airline 
+augroup vim-airline
     set laststatus=2
     let g:airline_left_sep = '▶'
     let g:airline_right_sep = '◀'
+augroup END
+
+augroup indentLine
+    let g:indentLine_loaded = 1
 augroup END
 
 augroup NERDTree
@@ -149,7 +153,7 @@ augroup DoxygenToolkit
 	let g:DoxygenToolkit_authorName="jiaoew"
 augroup END
 
-augroup ctrlp 
+augroup ctrlp
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_switch_buffer = 't'
     let g:ctrlp_mruf_include = '\.java$\|\.js$|\.cpp$'
@@ -175,7 +179,7 @@ augroup youcompleteme
     let g:ycm_extra_conf_globlist = ['~/workspace/practice/.ycm_extra_conf.py']
     nmap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 augroup END
-    
+
 augroup syntastic
     let g:syntastic_error_symbol = '✗'
     let g:syntastic_warning_symbol = 'w'
@@ -192,4 +196,9 @@ augroup END
 augroup tern_for_vim
     nnoremap <leader>td :TernDef<CR>
     nnoremap <leader>tr :TernRefs<CR>
+augroup END
+
+augroup eclim
+    let g:EclimCompletionMethod = 'omnifunc'
+    nnoremap <leader>el :ProjectTree<CR>
 augroup END
