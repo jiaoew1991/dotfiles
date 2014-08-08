@@ -6,60 +6,68 @@ endif
 
 "vbundle {
     if g:iswindows
-        set rtp+=$VIM/vimfiles/vundle/
+        set rtp+=$VIM/vimfiles/bundle/Vundle.vim
     else
-        set rtp+=~/.vim/vundle/
+        set rtp+=~/.vim/bundle/Vundle.vim
     endif
-    call vundle#rc()
-    Bundle 'L9'
-    Bundle 'a.vim'
-    Bundle 'ctrlp.vim'
-    Bundle 'tacahiroy/ctrlp-funky'
-    Bundle 'DoxygenToolkit.vim'
-    Bundle 'The-NERD-Commenter'
+    call vundle#begin()
+    Plugin 'gmarik/Vundle.vim'
+
+    Plugin 'L9'
+    Plugin 'a.vim'
+    Plugin 'ctrlp.vim'
+    Plugin 'tacahiroy/ctrlp-funky'
+    Plugin 'DoxygenToolkit.vim'
+    Plugin 'The-NERD-Commenter'
     " detect file encoding
-    Bundle 'mbbill/fencview'
+    Plugin 'mbbill/fencview'
     "for beauty{
-    Bundle 'bling/vim-airline'
-    Bundle 'Yggdroot/indentLine'
+    Plugin 'bling/vim-airline'
+    Plugin 'Yggdroot/indentLine'
     "}
-    Bundle 'scrooloose/nerdtree'
+    Plugin 'scrooloose/nerdtree'
 
     "colorscheme and highlight{
-    Bundle 'altercation/vim-colors-solarized'
-    Bundle 'joedicastro/vim-molokai256'
-    Bundle 'nielsmadan/harlequin'
-    Bundle 'tomasr/molokai'
-    Bundle 'TagHighlight'
+    Plugin 'altercation/vim-colors-solarized'
+    Plugin 'joedicastro/vim-molokai256'
+    Plugin 'nielsmadan/harlequin'
+    Plugin 'tomasr/molokai'
+    Plugin 'd11wtq/tomorrow-theme-vim'
+    Plugin 'TagHighlight'
     "}"
-    Bundle 'xolox/vim-misc'
+    Plugin 'xolox/vim-misc'
     "snipmate usage {
-    Bundle 'MarcWeber/vim-addon-mw-utils'
-    Bundle 'tomtom/tlib_vim'
-    Bundle 'garbas/vim-snipmate'
-    Bundle 'honza/vim-snippets'
+    Plugin 'MarcWeber/vim-addon-mw-utils'
+    Plugin 'tomtom/tlib_vim'
+    Plugin 'garbas/vim-snipmate'
+    Plugin 'honza/vim-snippets'
     "}
     "snippets source
-    Bundle 'Emmet.vim'
-    Bundle 'tpope/vim-surround'
-    Bundle 'tpope/vim-repeat'
+    Plugin 'Emmet.vim'
+    Plugin 'tpope/vim-surround'
+    Plugin 'tpope/vim-repeat'
 
-    Bundle 'scrooloose/syntastic'
+    Plugin 'scrooloose/syntastic'
     if g:iswindows
-        Bundle 'Shougo/neocomplcache'
-        Bundle 'Shougo/neocomplcache-clang'
+        Plugin 'Shougo/neocomplcache'
+        Plugin 'Shougo/neocomplcache-clang'
     else
-        Bundle 'Valloric/YouCompleteMe'
+        Plugin 'Valloric/YouCompleteMe'
     endif
-    Bundle 'Raimondi/delimitMate'
-    Bundle 'marijnh/tern_for_vim'
+    Plugin 'Raimondi/delimitMate'
+    Plugin 'marijnh/tern_for_vim'
 
-    Bundle 'Lokaltog/vim-easymotion'
+    Plugin 'Lokaltog/vim-easymotion'
     "for specific files {
-    Bundle 'Jinja'
-    Bundle 'derekwyatt/vim-scala'
+    Plugin 'Jinja'
+    Plugin 'derekwyatt/vim-scala'
     "}
-    Bundle 'editorconfig/editorconfig-vim'
+    Plugin 'editorconfig/editorconfig-vim'
+
+    " session
+    Plugin 'xolox/vim-session'
+
+    call vundle#end()
 "}
 augroup common
     if !g:iswindows
@@ -196,6 +204,11 @@ augroup END
 augroup tern_for_vim
     nnoremap <leader>td :TernDef<CR>
     nnoremap <leader>tr :TernRefs<CR>
+augroup END
+
+augroup vim-session
+    let g:session_autosave='yes'
+    let g:session_autoload='yes'
 augroup END
 
 augroup eclim
