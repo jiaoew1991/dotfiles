@@ -4,6 +4,8 @@ else
     let g:iswindows=0
 endif
 
+    "set columns=3000
+    "set lines=3000
 "vbundle {
     if g:iswindows
         set rtp+=$VIM/vimfiles/bundle/Vundle.vim
@@ -19,21 +21,19 @@ endif
     Plugin 'tacahiroy/ctrlp-funky'
     Plugin 'DoxygenToolkit.vim'
     Plugin 'The-NERD-Commenter'
-    " detect file encoding
-    Plugin 'mbbill/fencview'
     "for beauty{
     Plugin 'bling/vim-airline'
-    Plugin 'Yggdroot/indentLine'
     "}
     Plugin 'scrooloose/nerdtree'
+    Plugin 'jistr/vim-nerdtree-tabs'
+    Plugin 'szw/vim-ctrlspace'
 
+    Plugin 'tpope/vim-fugitive'
     "colorscheme and highlight{
     Plugin 'altercation/vim-colors-solarized'
-    Plugin 'joedicastro/vim-molokai256'
     Plugin 'nielsmadan/harlequin'
-    Plugin 'tomasr/molokai'
     Plugin 'd11wtq/tomorrow-theme-vim'
-    Plugin 'TagHighlight'
+    "Plugin 'STL-Syntax'
     "}"
     Plugin 'xolox/vim-misc'
     "snipmate usage {
@@ -47,7 +47,7 @@ endif
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-repeat'
 
-    Plugin 'scrooloose/syntastic'
+    "Plugin 'scrooloose/syntastic'
     if g:iswindows
         Plugin 'Shougo/neocomplcache'
         Plugin 'Shougo/neocomplcache-clang'
@@ -60,12 +60,20 @@ endif
     Plugin 'Lokaltog/vim-easymotion'
     "for specific files {
     Plugin 'Jinja'
+    Plugin 'JavaScript-Indent'
+    Plugin 'jelera/vim-javascript-syntax'
+    Plugin 'kchmck/vim-coffee-script'
+    Plugin 'digitaltoad/vim-jade'
     Plugin 'derekwyatt/vim-scala'
+    Plugin 'ekalinin/Dockerfile.vim'
+
+    Plugin 'rust-lang/rust.vim'
+    "Bundle 'drmikehenry/vim-fontsize'
+    "Bundle 'YuMS/vim-shufflefonts'
     "}
     Plugin 'editorconfig/editorconfig-vim'
-
-    " session
-    Plugin 'xolox/vim-session'
+    Plugin 'mileszs/ack.vim'
+    Plugin 'rizzatti/dash.vim'
 
     call vundle#end()
 "}
@@ -76,9 +84,11 @@ augroup common
     endif
 
     set nocompatible
+    syntax enable
     syntax on
-    filetype plugin indent on
+    filetype on
     filetype plugin on
+    filetype plugin indent on
     set autoindent " always set autoindenting on
 
     set fileencodings=utf-8,latin1
@@ -90,7 +100,6 @@ augroup common
     set autochdir
     set ru
     set number
-    syntax enable
     if has("gui_running")
         colorscheme solarized
         if (has("win32"))
@@ -108,10 +117,17 @@ augroup common
     set guioptions-=r
     set guioptions-=b
 
+    set mouse=a
     set hlsearch
     set incsearch
+    set wildmenu
+    set cursorline
+    set cursorcolumn
     set backspace=indent,eol,start whichwrap+=<,>,[,]
     let mapleader=","
+
+    set foldmethod=indent
+    set nofoldenable
 
     nmap <C-h> <C-w>h
     nmap <C-j> <C-w>j
@@ -152,6 +168,7 @@ augroup NERDTree
     let NERDTreeMouseMode=2
     let NERDTreeShowHidden=1
     let NERDTreeKeepTreeInNewTab=1
+    let NERDTreeAutoDeleteBuffer=1
     let g:nerdtree_tabs_open_on_gui_startup=0
 augroup END
 
@@ -170,7 +187,7 @@ augroup ctrlp
     nnoremap <leader>fb :CtrlPBuffer<CR>
     let g:ctrlp_custom_ignore = {
         \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-        \ 'file': '\.exe$\|\.so$\|\.dll$' }
+        \ 'file': '\.exe$\|\.so$\|\.dll$|\.class$|\.o' }
     let g:ctrlp_extentions = ['funky']
 augroup END
 
@@ -184,21 +201,25 @@ augroup youcompleteme
     let g:ycm_autoclose_preview_window_after_completion = 1
     let g:ycm_autoclose_preview_window_after_insertion = 1
     let g:ycm_collect_identifiers_from_tags_files = 1
-    let g:ycm_extra_conf_globlist = ['~/workspace/practice/.ycm_extra_conf.py']
-    nmap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    let g:ycm_confirm_extra_conf=0
+    let g:ycm_seed_identifiers_with_syntax=1
+    "let g:ycm_extra_conf_globlist = ['~/workspace/practice/.ycm_extra_conf.py']
+    nmap <leader>jd :YcmCompleter GoTo<CR>
 augroup END
 
-augroup syntastic
-    let g:syntastic_error_symbol = '✗'
-    let g:syntastic_warning_symbol = 'w'
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_python_checkers = ['flake8']
-    let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
-    "let g:syntastic_mode_map = { 'mode': 'passive', 'active_file': [], 'passive_file': [] }
-augroup END
+"augroup syntastic
+    "let g:syntastic_error_symbol = '✗'
+    "let g:syntastic_warning_symbol = 'w'
+    "let g:syntastic_always_populate_loc_list = 1
+    "let g:syntastic_python_checkers = ['flake8']
+    "let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
+    ""let g:syntastic_mode_map = { 'mode': 'passive', 'active_file': [], 'passive_file': [] }
+"augroup END
 
 augroup snipmate
-    let g:snip_author="jiaoew"
+    let g:snips_author="jiaoew"
+    let g:snips_email="jiaoew2011@gmail.com"
+    let g:snips_github="http://github.com/jiaoew1991"
 augroup END
 
 augroup tern_for_vim
@@ -214,4 +235,9 @@ augroup END
 augroup eclim
     let g:EclimCompletionMethod = 'omnifunc'
     nnoremap <leader>el :ProjectTree<CR>
+augroup END
+
+augroup ctrlspace
+    let g:ctrlspace_load_last_workspace_on_start=1
+    let g:ctrlspace_save_workspace_on_exit=1
 augroup END
