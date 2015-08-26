@@ -26,9 +26,12 @@ endif
     "}
     Plugin 'scrooloose/nerdtree'
     Plugin 'jistr/vim-nerdtree-tabs'
-    Plugin 'szw/vim-ctrlspace'
 
+    "for git {
     Plugin 'tpope/vim-fugitive'
+    Plugin 'airblade/vim-gitgutter'
+    "}
+    "
     "colorscheme and highlight{
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'nielsmadan/harlequin'
@@ -60,20 +63,22 @@ endif
     Plugin 'Lokaltog/vim-easymotion'
     "for specific files {
     Plugin 'Jinja'
-    Plugin 'JavaScript-Indent'
-    Plugin 'jelera/vim-javascript-syntax'
+    "Plugin 'JavaScript-Indent'
+    "Plugin 'jelera/vim-javascript-syntax'
+    Plugin 'pangloss/vim-javascript'
     Plugin 'kchmck/vim-coffee-script'
     Plugin 'digitaltoad/vim-jade'
     Plugin 'derekwyatt/vim-scala'
     Plugin 'ekalinin/Dockerfile.vim'
-
     Plugin 'rust-lang/rust.vim'
-    "Bundle 'drmikehenry/vim-fontsize'
-    "Bundle 'YuMS/vim-shufflefonts'
+    "Plugin 'phildawes/racer'
     "}
+
     Plugin 'editorconfig/editorconfig-vim'
     Plugin 'mileszs/ack.vim'
     Plugin 'rizzatti/dash.vim'
+
+    Plugin 'JarrodCTaylor/vim-python-test-runner'
 
     call vundle#end()
 "}
@@ -101,15 +106,16 @@ augroup common
     set ru
     set number
     if has("gui_running")
-        colorscheme solarized
+        colorscheme Tomorrow
         if (has("win32"))
             set guifont=Droid Sans Mono:h12:cANSI
             set guifontwide=youYuan:h12:cGB2312
         endif
-    else
-        colorscheme harlequin
+    "else
+        "colorscheme Tomorrow
     endif
-    set background=dark
+    "vim colorscheme Tomorrow
+    "set background=dark
 
     set guioptions-=m
     set guioptions-=T
@@ -135,7 +141,7 @@ augroup common
     nmap <C-l> <C-w>l
     nnoremap <leader>oa gg<S-v>G
 
-    autocmd BufEnter * lcd %:p:h
+    autocmd BufEnter * if expand('%:p') !~ '://' | :lchdir %:p:h | endif
     if &term =~ "xterm\\|rxvt"
         " use an orange cursor in insert mode
         left &t_SI = "\<Esc>]12;green\x7"
@@ -181,13 +187,12 @@ augroup END
 augroup ctrlp
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_switch_buffer = 't'
-    let g:ctrlp_mruf_include = '\.java$\|\.js$|\.cpp$'
+    let g:ctrlp_mruf_include = '\.java$\|\.js$|\.cpp$|\.py$'
     nnoremap <silent> <A-r> :CtrlPMRU<CR>
-    nnoremap <silent> <A-p> :CtrlPBuffer<CR>
     nnoremap <leader>fb :CtrlPBuffer<CR>
     let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-        \ 'file': '\.exe$\|\.so$\|\.dll$|\.class$|\.o' }
+        \ 'dir':  '\.git$\|\.hg$\|\.svn$|target$|bin$',
+        \ 'file': '\.exe$\|\.so$\|\.dll$|\.class$|\.o|\.pyc' }
     let g:ctrlp_extentions = ['funky']
 augroup END
 
@@ -207,15 +212,6 @@ augroup youcompleteme
     nmap <leader>jd :YcmCompleter GoTo<CR>
 augroup END
 
-"augroup syntastic
-    "let g:syntastic_error_symbol = '✗'
-    "let g:syntastic_warning_symbol = 'w'
-    "let g:syntastic_always_populate_loc_list = 1
-    "let g:syntastic_python_checkers = ['flake8']
-    "let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
-    ""let g:syntastic_mode_map = { 'mode': 'passive', 'active_file': [], 'passive_file': [] }
-"augroup END
-
 augroup snipmate
     let g:snips_author="jiaoew"
     let g:snips_email="jiaoew2011@gmail.com"
@@ -227,17 +223,30 @@ augroup tern_for_vim
     nnoremap <leader>tr :TernRefs<CR>
 augroup END
 
-augroup vim-session
-    let g:session_autosave='yes'
-    let g:session_autoload='yes'
+augroup racer
+    let g:racer_cmd = "/Users/jiaoew/thirdparty/rust/vendor/racer/target/release/racer"
+    let $RUST_SRC_PATH="/Users/jiaoew/thirdparty/rust/src/"
 augroup END
 
-augroup eclim
-    let g:EclimCompletionMethod = 'omnifunc'
-    nnoremap <leader>el :ProjectTree<CR>
+augroup vim_python_test_runner
+    nnoremap <leader>nf :NosetestFile<CR>
+    nnoremap <leader>nc :NosetestClass<CR>
+    nnoremap <leader>nm :NosetestMethod<CR>
+    nnoremap <leader>nb :NosetestBaseMethod<CR>
+    nnoremap <leader>rr :RerunLastTests<CR>
 augroup END
 
-augroup ctrlspace
-    let g:ctrlspace_load_last_workspace_on_start=1
-    let g:ctrlspace_save_workspace_on_exit=1
+augroup fugitive
+    nnoremap <leader>gs :Gstatus<CR>
+    nnoremap <leader>gp :Gpush<CR>
+    nnoremap <leader>gd :Gdiff<CR>
+    nnoremap <leader>gc :Gcommit<CR>
+    nnoremap <leader>gb :Gblame<CR>
+    nnoremap <leader>gl :Glog<CR>
+    nnoremap <leader>gw :Gwrite<CR>
+augroup END
+
+augroup gitgutter
+    let g:gitgutter_realtime = 1
+    let g:gitgutter_eager = 1
 augroup END
