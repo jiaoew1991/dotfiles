@@ -8,7 +8,7 @@ indent_style = space
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{html,css,less,json,jade,scala,coffee}]
+[*.{html,css,less,json,jade,scala,sbt,coffee}]
 indent_size = 2
 
 [*.gyp]

@@ -12,6 +12,8 @@ endif
     else
         set rtp+=~/.vim/bundle/Vundle.vim
     endif
+    set rtp+=~/.fzf
+
     call vundle#begin()
     Plugin 'gmarik/Vundle.vim'
 
@@ -25,19 +27,20 @@ endif
     Plugin 'bling/vim-airline'
     "}
     Plugin 'scrooloose/nerdtree'
-    Plugin 'jistr/vim-nerdtree-tabs'
 
     "for git {
     Plugin 'tpope/vim-fugitive'
     Plugin 'airblade/vim-gitgutter'
+    Plugin 'gregsexton/gitv'
     "}
     "
     "colorscheme and highlight{
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'nielsmadan/harlequin'
     Plugin 'd11wtq/tomorrow-theme-vim'
-    "Plugin 'STL-Syntax'
+    Plugin 'kien/rainbow_parentheses.vim'
     "}"
+
     Plugin 'xolox/vim-misc'
     "snipmate usage {
     Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -45,6 +48,7 @@ endif
     Plugin 'garbas/vim-snipmate'
     Plugin 'honza/vim-snippets'
     "}
+
     "snippets source
     Plugin 'Emmet.vim'
     Plugin 'tpope/vim-surround'
@@ -63,22 +67,28 @@ endif
     Plugin 'Lokaltog/vim-easymotion'
     "for specific files {
     Plugin 'Jinja'
-    "Plugin 'JavaScript-Indent'
-    "Plugin 'jelera/vim-javascript-syntax'
     Plugin 'pangloss/vim-javascript'
     Plugin 'kchmck/vim-coffee-script'
     Plugin 'digitaltoad/vim-jade'
     Plugin 'derekwyatt/vim-scala'
     Plugin 'ekalinin/Dockerfile.vim'
     Plugin 'rust-lang/rust.vim'
+    Plugin 'mxw/vim-jsx'
+    Plugin 'leafgarland/typescript-vim'
     "Plugin 'phildawes/racer'
     "}
 
     Plugin 'editorconfig/editorconfig-vim'
-    Plugin 'mileszs/ack.vim'
+    Plugin 'smeggingsmegger/ag.vim'
     Plugin 'rizzatti/dash.vim'
 
     Plugin 'JarrodCTaylor/vim-python-test-runner'
+
+    Plugin 'xolox/vim-session'
+    Plugin 'godlygeek/tabular'
+
+    " rest client
+    Plugin 'aquach/vim-http-client'
 
     call vundle#end()
 "}
@@ -107,15 +117,11 @@ augroup common
     set number
     if has("gui_running")
         colorscheme Tomorrow
-        if (has("win32"))
+        if (g:iswindows)
             set guifont=Droid Sans Mono:h12:cANSI
             set guifontwide=youYuan:h12:cGB2312
         endif
-    "else
-        "colorscheme Tomorrow
     endif
-    "vim colorscheme Tomorrow
-    "set background=dark
 
     set guioptions-=m
     set guioptions-=T
@@ -139,7 +145,8 @@ augroup common
     nmap <C-j> <C-w>j
     nmap <C-k> <C-w>k
     nmap <C-l> <C-w>l
-    nnoremap <leader>oa gg<S-v>G
+    imap jk <Esc>
+    nnoremap <leader>sa gg<S-v>G
 
     autocmd BufEnter * if expand('%:p') !~ '://' | :lchdir %:p:h | endif
     if &term =~ "xterm\\|rxvt"
@@ -152,16 +159,23 @@ augroup common
         autocmd VimLeave * silent !echo -ne "\033]112\007"
         " use \003]12;gray\007 for gnome-terminal
     endif
+
+    noremap <leader>1 1gt
+    noremap <leader>2 2gt
+    noremap <leader>3 3gt
+    noremap <leader>4 4gt
+    noremap <leader>5 5gt
+    noremap <leader>6 6gt
+    noremap <leader>7 7gt
+    noremap <leader>8 8gt
+    noremap <leader>9 9gt
+    noremap <leader>0 :tablast<cr>
 augroup END
 
 augroup vim-airline
     set laststatus=2
     let g:airline_left_sep = '▶'
     let g:airline_right_sep = '◀'
-augroup END
-
-augroup indentLine
-    let g:indentLine_loaded = 1
 augroup END
 
 augroup NERDTree
@@ -187,12 +201,14 @@ augroup END
 augroup ctrlp
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_switch_buffer = 't'
-    let g:ctrlp_mruf_include = '\.java$\|\.js$|\.cpp$|\.py$'
+    "let g:ctrlp_mruf_include = '\.java$\|\.js$|\.cpp$|\.py$'
     nnoremap <silent> <A-r> :CtrlPMRU<CR>
     nnoremap <leader>fb :CtrlPBuffer<CR>
-    let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\.git$\|\.hg$\|\.svn$|target$|bin$',
-        \ 'file': '\.exe$\|\.so$\|\.dll$|\.class$|\.o|\.pyc' }
+    set wildignore+=*.o,*.pyc,*.class,*/target/**,*/bin/**,*/.idea/**,*/env/**,*/node_modules/**
+    "let g:ctrlp_custom_ignore = { \
+        "\ 'dir':  '\.git$\|\.hg$\|\.svn$|target$|bin$',
+        "\ 'file': '\.exe$\|\.so$\|\.dll$|\.class$|\.o|\.pyc'
+        "\}
     let g:ctrlp_extentions = ['funky']
 augroup END
 
@@ -210,6 +226,8 @@ augroup youcompleteme
     let g:ycm_seed_identifiers_with_syntax=1
     "let g:ycm_extra_conf_globlist = ['~/workspace/practice/.ycm_extra_conf.py']
     nmap <leader>jd :YcmCompleter GoTo<CR>
+
+    let g:EclimCompletionMethod = 'omnifunc'
 augroup END
 
 augroup snipmate
@@ -249,4 +267,29 @@ augroup END
 augroup gitgutter
     let g:gitgutter_realtime = 1
     let g:gitgutter_eager = 1
+augroup END
+
+augroup vim-session
+    let g:session_autosave = 'yes'
+    let g:session_autoload = 'yes'
+augroup END
+
+augroup rainbow
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+augroup END
+
+augroup delimiter
+    let delimitMate_expand_cr = 1
+augroup END
+
+augroup vim-jsx
+    let g:jsx_ext_required = 0
+augroup END
+
+augroup typescript-js
+    autocmd BufNewFile,BufRead *.ts     set filetype=typescript
+    autocmd BufNewFile,BufRead *.tsx    set filetype=typescript
 augroup END
