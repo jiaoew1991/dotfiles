@@ -29,7 +29,8 @@ let g:python_host_prog='/usr/local/bin/python'
     "}
     "
     "colorscheme and highlight{
-    Plug 'altercation/vim-colors-solarized'
+    "Plug 'altercation/vim-colors-solarized'
+    Plug 'frankier/neovim-colors-solarized-truecolor-only'
     Plug 'd11wtq/tomorrow-theme-vim'
     Plug 'kien/rainbow_parentheses.vim'
     "}"
@@ -46,12 +47,12 @@ let g:python_host_prog='/usr/local/bin/python'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-repeat'
 
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer --tern-completer' }
     Plug 'Raimondi/delimitMate'
-    Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
     Plug 'Lokaltog/vim-easymotion'
     "for specific files {
+    "Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
     Plug 'Jinja', { 'for': 'html' }
     Plug 'pangloss/vim-javascript' , { 'for': 'javascript' }
     Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
@@ -66,11 +67,11 @@ let g:python_host_prog='/usr/local/bin/python'
     Plug 'smeggingsmegger/ag.vim', { 'on': 'Ag' }
     Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
 
-    " rest client
-    Plug 'aquach/vim-http-client'
+    Plug 'aquach/vim-http-client'  " rest client
     Plug 'benekastah/neomake', { 'on': 'Neomake' }
     Plug 'jiaoew1991/neoterm'
     Plug 'mhinz/vim-startify'
+    Plug 'scrooloose/syntastic'
 
     call plug#end()
 " }
@@ -84,7 +85,6 @@ augroup common
     filetype plugin on
     filetype plugin indent on
 
-    set shell=zsh
     set fileencodings=utf-8,latin1
     set sw=4
     set ts=4
@@ -189,16 +189,6 @@ augroup snipmate
     let g:snips_github="http://github.com/jiaoew1991"
 augroup END
 
-augroup tern_for_vim
-    nnoremap <leader>td :TernDef<CR>
-    nnoremap <leader>tr :TernRefs<CR>
-augroup END
-
-augroup racer
-    let g:racer_cmd = "/Users/jiaoew/thirdparty/rust/vendor/racer/target/release/racer"
-    let $RUST_SRC_PATH="/Users/jiaoew/thirdparty/rust/src/"
-augroup END
-
 augroup fugitive
     nnoremap <leader>gs :Gstatus<CR>
     nnoremap <leader>gp :Gpush<CR>
@@ -253,4 +243,36 @@ augroup neoterm
     " kills the curren<leader> job (send a <c-c>)
     nnoremap <silent> <leader>tc :call neoterm#kill()<cr>
 
+augroup END
+
+augroup syntastic
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_ignore_files = ['\.html$', '\.sbt$', '\.scala$']
+
+    let g:syntastic_always_populate_loc_list = 0
+    let g:syntastic_auto_loc_list = 0
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+
+    let g:syntastic_python_checkers = ['flake8']
+    let g:syntastic_java_checkers = ['checkstyle']
+    let g:syntastic_javascript_checkers = ['jshint']
+    let g:syntastic_typescript_checkers = ['tslint']
+augroup END
+
+augroup vim-javacomplete2
+    autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+    nmap <F4> <Plug>(JavaComplete-Imports-Add)
+    imap <F4> <Plug>(JavaComplete-Imports-Add)
+
+    nmap <F5> <Plug>(JavaComplete-Imports-AddMissing)
+    imap <F5> <Plug>(JavaComplete-Imports-AddMissing)
+
+    nmap <F6> <Plug>(JavaComplete-Imports-RemoveUnused)
+    imap <F6> <Plug>(JavaComplete-Imports-RemoveUnused)
+    let g:JavaComplete_BaseDir = '~/.vim/bundle/vim-javacomplete2/cache'
 augroup END
