@@ -7,73 +7,76 @@ endif
 let g:python_host_prog='/usr/local/bin/python'
 
 " plugin manager {
-    call plug#begin('~/.vim/bundle')
+function! DoRemote(arg)
+    UpdateRemotePlugins
+endfunction
+call plug#begin('~/.vim/bundle')
 
-    Plug 'L9'
-    Plug 'a.vim'
-    Plug 'ctrlp.vim'
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'tacahiroy/ctrlp-funky', { 'on': 'CtrlPFunky' }
-    Plug 'DoxygenToolkit.vim', { 'on': 'Dox' }
-    Plug 'The-NERD-Commenter'
-    Plug 'CodeFalling/fcitx-vim-osx'
-    "for beauty{
-    Plug 'bling/vim-airline'
-    "}
-    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'L9'
+Plug 'a.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'Shougo/denite.nvim'
+Plug 'DoxygenToolkit.vim', { 'on': 'Dox' }
+Plug 'The-NERD-Commenter'
+Plug 'ybian/smartim'
+"for beauty{
+Plug 'bling/vim-airline'
+"}
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'kien/tabman.vim'
 
-    "for git {
-    Plug 'tpope/vim-fugitive'
-    Plug 'airblade/vim-gitgutter'
-    Plug 'gregsexton/gitv', { 'on': 'Gitv' }
-    "}
-    "
-    "colorscheme and highlight{
-    "Plug 'altercation/vim-colors-solarized'
-    Plug 'frankier/neovim-colors-solarized-truecolor-only'
-    Plug 'd11wtq/tomorrow-theme-vim'
-    Plug 'kien/rainbow_parentheses.vim'
-    "}"
+"for git {
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+"}
+"
+"colorscheme and highlight{
+Plug 'frankier/neovim-colors-solarized-truecolor-only'
+Plug 'kien/rainbow_parentheses.vim'
+"}"
 
-    Plug 'xolox/vim-misc'
-    "snipmate usage {
-    Plug 'MarcWeber/vim-addon-mw-utils'
-    Plug 'tomtom/tlib_vim'
-    Plug 'garbas/vim-snipmate'
-    Plug 'honza/vim-snippets'
-    "}
-    Plug 'Emmet.vim'
+Plug 'xolox/vim-misc'
+Plug 'Emmet.vim'
 
-    Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer --tern-completer' }
-    Plug 'Raimondi/delimitMate'
+" completions {
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'Shougo/echodoc.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+" }
 
-    Plug 'Lokaltog/vim-easymotion'
-    "for specific files {
-    "Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-    Plug 'Jinja', { 'for': 'html' }
-    Plug 'pangloss/vim-javascript' , { 'for': 'javascript' }
-    Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
-    Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
-    Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
-    Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-    Plug 'mxw/vim-jsx', { 'for': 'javascript' }
-    Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-    "}
+Plug 'Lokaltog/vim-easymotion'
+"for specific files {
+Plug 'Jinja', { 'for': 'html' }
+Plug 'pangloss/vim-javascript' , { 'for': 'javascript' }
+Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
+Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+"}
 
-    Plug 'editorconfig/editorconfig-vim'
-    Plug 'smeggingsmegger/ag.vim', { 'on': 'Ag' }
-    Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
+Plug 'editorconfig/editorconfig-vim'
+Plug 'smeggingsmegger/ag.vim', { 'on': 'Ag' }
+Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
 
-    Plug 'aquach/vim-http-client'  " rest client
-    Plug 'benekastah/neomake', { 'on': 'Neomake' }
-    Plug 'jiaoew1991/neoterm'
-    Plug 'mhinz/vim-startify'
-    Plug 'scrooloose/syntastic'
+Plug 'aquach/vim-http-client'  " rest client
+Plug 'benekastah/neomake'
+Plug 'jiaoew1991/neoterm'
+Plug 'mhinz/vim-startify'
+"Plug 'scrooloose/syntastic'
 
-    call plug#end()
+call plug#end()
 " }
 
 augroup common
@@ -94,7 +97,9 @@ augroup common
     set autochdir
     set ru
     set number
-    set background=dark
+    if(has('gui'))
+        set background=dark
+    endif
 
     colorscheme solarized
     if (g:iswindows)
@@ -134,10 +139,9 @@ augroup vim-airline
 augroup END
 
 augroup NERDTree
-	map <C-e> :NERDTreeToggle<cr>:NERDTreeMirror<cr>
-	nmap <leader>nt :NERDTreeFind<cr>
-	let NERDTreeShowBookmarks=1
-	let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+    nmap <leader>nt :NERDTreeFind<cr>
+    let NERDTreeShowBookmarks=1
+    let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
     let NERDTreeChDirMode=0
     let NERDTreeQuitOnOpen=1
     let NERDTreeMouseMode=2
@@ -145,48 +149,6 @@ augroup NERDTree
     let NERDTreeKeepTreeInNewTab=1
     let NERDTreeAutoDeleteBuffer=1
     let g:nerdtree_tabs_open_on_gui_startup=0
-augroup END
-
-augroup DoxygenToolkit
-	let g:DoxygenToolkit_paramTag_pre="@param   "
-	let g:DoxygenToolkit_returnTag="@returns   "
-	let g:DoxygenToolkit_authorName="jiaoew"
-augroup END
-
-augroup ctrlp
-    let g:ctrlp_working_path_mode = 2
-    let g:ctrlp_switch_buffer = 't'
-    nnoremap <silent> <A-r> :CtrlPMRU<CR>
-    nnoremap <leader>fb :CtrlPBuffer<CR>
-    set wildignore+=*.o,*.pyc,*.class,*/target/**,*/bin/**,*/.idea/**,*/env/**,*/node_modules/**
-    "let g:ctrlp_custom_ignore = { \
-        "\ 'dir':  '\.git$\|\.hg$\|\.svn$|target$|bin$',
-        "\ 'file': '\.exe$\|\.so$\|\.dll$|\.class$|\.o|\.pyc'
-        "\}
-    let g:ctrlp_extentions = ['funky']
-augroup END
-
-augroup ctrip-funcky
-    nnoremap <leader>fp :CtrlPFunky<CR>
-augroup END
-
-augroup youcompleteme
-    let g:ycm_key_list_select_completion=['<Down>']
-    let g:ycm_key_list_previous_completion=['<Up>']
-    let g:ycm_autoclose_preview_window_after_completion = 1
-    let g:ycm_autoclose_preview_window_after_insertion = 1
-    let g:ycm_collect_identifiers_from_tags_files = 1
-    let g:ycm_confirm_extra_conf=0
-    let g:ycm_seed_identifiers_with_syntax=1
-    nmap <leader>jd :YcmCompleter GoTo<CR>
-
-    let g:EclimCompletionMethod = 'omnifunc'
-augroup END
-
-augroup snipmate
-    let g:snips_author="jiaoew"
-    let g:snips_email="jiaoew2011@gmail.com"
-    let g:snips_github="http://github.com/jiaoew1991"
 augroup END
 
 augroup fugitive
@@ -216,19 +178,6 @@ augroup rainbow
     au Syntax * RainbowParenthesesLoadBraces
 augroup END
 
-augroup delimiter
-    let delimitMate_expand_cr = 1
-augroup END
-
-augroup vim-jsx
-    let g:jsx_ext_required = 0
-augroup END
-
-augroup typescript-js
-    autocmd BufNewFile,BufRead *.ts     set filetype=typescript
-    autocmd BufNewFile,BufRead *.tsx    set filetype=typescript
-augroup END
-
 augroup neoterm
     let g:neoterm_automap_keys = '<leader>te'
     " run set test lib
@@ -245,34 +194,67 @@ augroup neoterm
 
 augroup END
 
-augroup syntastic
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
+augroup deoplete
+    let g:deoplete#enable_at_startup = 1
 
-    let g:syntastic_ignore_files = ['\.html$', '\.sbt$', '\.scala$']
+    let g:deoplete#sources = get(g:, 'deoplete#sources', {})
+    let g:deoplete#sources.go = ['vim-go']
 
-    let g:syntastic_always_populate_loc_list = 0
-    let g:syntastic_auto_loc_list = 0
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
+    let g:deoplete#sources#jedi#statement_length = 1
+    let g:deoplete#sources#jedi#show_docstring = 1
+    let g:deoplete#sources#jedi#short_types = 1
 
-    let g:syntastic_python_checkers = ['flake8']
-    let g:syntastic_java_checkers = ['checkstyle']
-    let g:syntastic_javascript_checkers = ['jshint']
-    let g:syntastic_typescript_checkers = ['tslint']
+    let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
+    let g:deoplete#ignore_sources.python = ['syntax']
+
+    let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
+    let g:deoplete#omni#functions.php = 'phpcomplete_extended#CompletePHP'
+    let g:deoplete#omni#functions.css = 'csscomplete#CompleteCSS'
+    let g:deoplete#omni#functions.html = 'htmlcomplete#CompleteTags'
+    let g:deoplete#omni#functions.markdown = 'htmlcomplete#CompleteTags'
+
+    call deoplete#custom#set('buffer',        'mark', 'ℬ')
+    call deoplete#custom#set('tag',           'mark', '⌦')
+    call deoplete#custom#set('omni',          'mark', '⌾')
+    call deoplete#custom#set('ternjs',        'mark', '⌁')
+    call deoplete#custom#set('jedi',          'mark', '⌁')
+    call deoplete#custom#set('vim',           'mark', '⌁')
+    call deoplete#custom#set('neosnippet',    'mark', '⌘')
+    call deoplete#custom#set('around',        'mark', '⮀')
+    call deoplete#custom#set('syntax',        'mark', '♯')
+    call deoplete#custom#set('tmux-complete', 'mark', '⊶')
+
+    call deoplete#custom#set('vim',           'rank', 620)
+    call deoplete#custom#set('jedi',          'rank', 610)
+    call deoplete#custom#set('omni',          'rank', 600)
+    call deoplete#custom#set('neosnippet',    'rank', 510)
+    call deoplete#custom#set('member',        'rank', 500)
+    call deoplete#custom#set('file_include',  'rank', 420)
+    call deoplete#custom#set('file',          'rank', 410)
+    call deoplete#custom#set('tag',           'rank', 400)
+    call deoplete#custom#set('around',        'rank', 330)
+    call deoplete#custom#set('buffer',        'rank', 320)
+    call deoplete#custom#set('dictionary',    'rank', 310)
+    call deoplete#custom#set('tmux-complete', 'rank', 300)
+    call deoplete#custom#set('syntax',        'rank', 200)
+
 augroup END
 
-augroup vim-javacomplete2
-    autocmd FileType java setlocal omnifunc=javacomplete#Complete
+augroup neosnippet
+    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    xmap <C-k>     <Plug>(neosnippet_expand_target)
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+augroup END
 
-    nmap <F4> <Plug>(JavaComplete-Imports-Add)
-    imap <F4> <Plug>(JavaComplete-Imports-Add)
+augroup echodoc
+	set cmdheight=2
+	let g:echodoc_enable_at_startup = 1
+augroup END
 
-    nmap <F5> <Plug>(JavaComplete-Imports-AddMissing)
-    imap <F5> <Plug>(JavaComplete-Imports-AddMissing)
-
-    nmap <F6> <Plug>(JavaComplete-Imports-RemoveUnused)
-    imap <F6> <Plug>(JavaComplete-Imports-RemoveUnused)
-    let g:JavaComplete_BaseDir = '~/.vim/bundle/vim-javacomplete2/cache'
+augroup fzf
+    nmap <D-p> :GFiles<cr>
+    nmap <D-e> :History<cr>
+    nmap <C-p> :Files<cr>
 augroup END

@@ -115,12 +115,13 @@ augroup common
     set autochdir
     set ru
     set number
+
+    if has('nvim')
+        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    end
+    set t_Co=256
     if has("gui_running")
         colorscheme Tomorrow
-        if (g:iswindows)
-            set guifont=Droid Sans Mono:h12:cANSI
-            set guifontwide=youYuan:h12:cGB2312
-        endif
     endif
 
     set guioptions-=m
@@ -170,6 +171,7 @@ augroup common
     noremap <leader>8 8gt
     noremap <leader>9 9gt
     noremap <leader>0 :tablast<cr>
+
 augroup END
 
 augroup vim-airline
