@@ -1,297 +1,231 @@
-if(has("win32") || has("win95") || has("win64") || has("win16"))
-    let g:iswindows=1
+call plug#begin()
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'morhetz/gruvbox'
+Plug 'vim-airline/vim-airline'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'easymotion/vim-easymotion'
+Plug 'fatih/vim-go'
+Plug 'SirVer/ultisnips'
+Plug 'thaerkh/vim-workspace'
+Plug 'puremourning/vimspector'
+
+call plug#end()
+
+" Show line number
+set number
+
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+let mapleader=","
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
 else
-    let g:iswindows=0
+  set signcolumn=yes
 endif
 
-    "set columns=3000
-    "set lines=3000
-"vbundle {
-    if g:iswindows
-        set rtp+=$VIM/vimfiles/bundle/Vundle.vim
-    else
-        set rtp+=~/.vim/bundle/Vundle.vim
-    endif
-    set rtp+=~/.fzf
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go', 'coc-clangd', 'coc-fzf-preview', 'coc-snippets', 'coc-sh', 'coc-translator']
 
-    call vundle#begin()
-    Plugin 'gmarik/Vundle.vim'
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ CheckBackspace() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-    Plugin 'L9'
-    Plugin 'a.vim'
-    Plugin 'ctrlp.vim'
-    Plugin 'tacahiroy/ctrlp-funky'
-    Plugin 'DoxygenToolkit.vim'
-    Plugin 'The-NERD-Commenter'
-    "for beauty{
-    Plugin 'bling/vim-airline'
-    "}
-    Plugin 'scrooloose/nerdtree'
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-    "for git {
-    Plugin 'tpope/vim-fugitive'
-    Plugin 'airblade/vim-gitgutter'
-    Plugin 'gregsexton/gitv'
-    "}
-    "
-    "colorscheme and highlight{
-    Plugin 'altercation/vim-colors-solarized'
-    Plugin 'nielsmadan/harlequin'
-    Plugin 'd11wtq/tomorrow-theme-vim'
-    Plugin 'kien/rainbow_parentheses.vim'
-    "}"
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
-    Plugin 'xolox/vim-misc'
-    "snipmate usage {
-    Plugin 'MarcWeber/vim-addon-mw-utils'
-    Plugin 'tomtom/tlib_vim'
-    Plugin 'garbas/vim-snipmate'
-    Plugin 'honza/vim-snippets'
-    "}
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-    "snippets source
-    Plugin 'Emmet.vim'
-    Plugin 'tpope/vim-surround'
-    Plugin 'tpope/vim-repeat'
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-    "Plugin 'scrooloose/syntastic'
-    if g:iswindows
-        Plugin 'Shougo/neocomplcache'
-        Plugin 'Shougo/neocomplcache-clang'
-    else
-        Plugin 'Valloric/YouCompleteMe'
-    endif
-    Plugin 'Raimondi/delimitMate'
-    Plugin 'marijnh/tern_for_vim'
+" GoTo code navigation.
+nmap <silent> <F3> <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-    Plugin 'Lokaltog/vim-easymotion'
-    "for specific files {
-    Plugin 'Jinja'
-    Plugin 'pangloss/vim-javascript'
-    Plugin 'kchmck/vim-coffee-script'
-    Plugin 'digitaltoad/vim-jade'
-    Plugin 'derekwyatt/vim-scala'
-    Plugin 'ekalinin/Dockerfile.vim'
-    Plugin 'rust-lang/rust.vim'
-    Plugin 'mxw/vim-jsx'
-    Plugin 'leafgarland/typescript-vim'
-    "Plugin 'phildawes/racer'
-    "}
+" Use K to show documentation in preview window.
+nnoremap <silent> <F2> :call ShowDocumentation()<CR>
 
-    Plugin 'editorconfig/editorconfig-vim'
-    Plugin 'smeggingsmegger/ag.vim'
-    Plugin 'rizzatti/dash.vim'
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
 
-    Plugin 'JarrodCTaylor/vim-python-test-runner'
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
-    Plugin 'xolox/vim-session'
-    Plugin 'godlygeek/tabular'
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
-    " rest client
-    Plugin 'aquach/vim-http-client'
+" CocTranslator popup
+nmap <Leader>t <Plug>(coc-translator-p)
+vmap <Leader>t <Plug>(coc-translator-pv)
 
-    call vundle#end()
-"}
-augroup common
-    if !g:iswindows
-        set encoding=utf-8
-        au BufWritePre set fileencoding=utf-8
-    endif
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
-    set nocompatible
-    syntax enable
-    syntax on
-    filetype on
-    filetype plugin on
-    filetype plugin indent on
-    set autoindent " always set autoindenting on
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
-    set fileencodings=utf-8,latin1
-    set sw=4
-    set ts=4
-    set sts=4
-    set expandtab
-    set vb t_vb=
-    set autochdir
-    set ru
-    set number
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-    if has('nvim')
-        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-    end
-    set t_Co=256
-    if has("gui_running")
-        colorscheme Tomorrow
-    endif
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
 
-    set guioptions-=m
-    set guioptions-=T
-    set guioptions-=L
-    set guioptions-=r
-    set guioptions-=b
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
 
-    set mouse=a
-    set hlsearch
-    set incsearch
-    set wildmenu
-    set cursorline
-    set cursorcolumn
-    set backspace=indent,eol,start whichwrap+=<,>,[,]
-    let mapleader=","
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
-    set foldmethod=indent
-    set nofoldenable
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
-    nmap <C-h> <C-w>h
-    nmap <C-j> <C-w>j
-    nmap <C-k> <C-w>k
-    nmap <C-l> <C-w>l
-    imap jk <Esc>
-    nnoremap <leader>sa gg<S-v>G
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
 
-    autocmd BufEnter * if expand('%:p') !~ '://' | :lchdir %:p:h | endif
-    if &term =~ "xterm\\|rxvt"
-        " use an orange cursor in insert mode
-        left &t_SI = "\<Esc>]12;green\x7"
-        " use a red cursor otherwise
-        let &t_EI = "\<Esc>]12;red\x7"
-        silent !echo -ne "\033]12;red\007"
-        " reset cursor when vim exits
-        autocmd VimLeave * silent !echo -ne "\033]112\007"
-        " use \003]12;gray\007 for gnome-terminal
-    endif
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
 
-    noremap <leader>1 1gt
-    noremap <leader>2 2gt
-    noremap <leader>3 3gt
-    noremap <leader>4 4gt
-    noremap <leader>5 5gt
-    noremap <leader>6 6gt
-    noremap <leader>7 7gt
-    noremap <leader>8 8gt
-    noremap <leader>9 9gt
-    noremap <leader>0 :tablast<cr>
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-augroup END
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
-augroup vim-airline
-    set laststatus=2
-    let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '◀'
-augroup END
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-augroup NERDTree
-	map <C-e> :NERDTreeToggle<cr>:NERDTreeMirror<cr>
-	nmap <leader>nt :NERDTreeFind<cr>
-	let NERDTreeShowBookmarks=1
-	let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-    let NERDTreeChDirMode=0
-    let NERDTreeQuitOnOpen=1
-    let NERDTreeMouseMode=2
-    let NERDTreeShowHidden=1
-    let NERDTreeKeepTreeInNewTab=1
-    let NERDTreeAutoDeleteBuffer=1
-    let g:nerdtree_tabs_open_on_gui_startup=0
-augroup END
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>et  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-augroup DoxygenToolkit
-	let g:DoxygenToolkit_paramTag_pre="@param   "
-	let g:DoxygenToolkit_returnTag="@returns   "
-	let g:DoxygenToolkit_authorName="jiaoew"
-augroup END
 
-augroup ctrlp
-    let g:ctrlp_working_path_mode = 2
-    let g:ctrlp_switch_buffer = 't'
-    "let g:ctrlp_mruf_include = '\.java$\|\.js$|\.cpp$|\.py$'
-    nnoremap <silent> <A-r> :CtrlPMRU<CR>
-    nnoremap <leader>fb :CtrlPBuffer<CR>
-    set wildignore+=*.o,*.pyc,*.class,*/target/**,*/bin/**,*/.idea/**,*/env/**,*/node_modules/**
-    "let g:ctrlp_custom_ignore = { \
-        "\ 'dir':  '\.git$\|\.hg$\|\.svn$|target$|bin$',
-        "\ 'file': '\.exe$\|\.so$\|\.dll$|\.class$|\.o|\.pyc'
-        "\}
-    let g:ctrlp_extentions = ['funky']
-augroup END
+" Mappings for Fzf
+nmap <silent> <C-p> <Cmd>FZF<CR>
+nmap <space>f [fzf-p]
+xmap <space>f [fzf-p]
 
-augroup ctrip-funcky
-    nnoremap <leader>fp :CtrlPFunky<CR>
-augroup END
+nnoremap <silent> [fzf-p]p     :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
+nnoremap <silent> [fzf-p]gs    :<C-u>CocCommand fzf-preview.GitStatus<CR>
+nnoremap <silent> [fzf-p]ga    :<C-u>CocCommand fzf-preview.GitActions<CR>
+nnoremap <silent> [fzf-p]b     :<C-u>CocCommand fzf-preview.Buffers<CR>
+nnoremap <silent> [fzf-p]B     :<C-u>CocCommand fzf-preview.AllBuffers<CR>
+nnoremap <silent> [fzf-p]o     :<C-u>CocCommand fzf-preview.FromResources buffer project_mru<CR>
+nnoremap <silent> [fzf-p]j     :<C-u>CocCommand fzf-preview.Jumps<CR>
+nnoremap <silent> [fzf-p]g;    :<C-u>CocCommand fzf-preview.Changes<CR>
+nnoremap <silent> [fzf-p]/     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
+nnoremap <silent> [fzf-p]*     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap          [fzf-p]gr    :<C-u>CocCommand fzf-preview.ProjectGrep<Space>
+xnoremap          [fzf-p]gr    "sy:CocCommand   fzf-preview.ProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <silent> [fzf-p]t     :<C-u>CocCommand fzf-preview.BufferTags<CR>
+nnoremap <silent> [fzf-p]q     :<C-u>CocCommand fzf-preview.QuickFix<CR>
+nnoremap <silent> [fzf-p]l     :<C-u>CocCommand fzf-preview.LocationList<CR>
+nnoremap <silent> [fzf-p]c     :<C-u>CocCommand fzf-preview.CommandPalette<CR>
 
-augroup youcompleteme
-    let g:ycm_key_list_select_completion=['<Down>']
-    let g:ycm_key_list_previous_completion=['<Up>']
-    let g:ycm_autoclose_preview_window_after_completion = 1
-    let g:ycm_autoclose_preview_window_after_insertion = 1
-    let g:ycm_collect_identifiers_from_tags_files = 1
-    let g:ycm_confirm_extra_conf=0
-    let g:ycm_seed_identifiers_with_syntax=1
-    "let g:ycm_extra_conf_globlist = ['~/workspace/practice/.ycm_extra_conf.py']
-    nmap <leader>jd :YcmCompleter GoTo<CR>
+" ColorSheme Gruvbox
+colorscheme gruvbox
 
-    let g:EclimCompletionMethod = 'omnifunc'
-augroup END
+" Airline
+let g:airline_powerline_fonts = 1
+" let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+" let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
 
-augroup snipmate
-    let g:snips_author="jiaoew"
-    let g:snips_email="jiaoew2011@gmail.com"
-    let g:snips_github="http://github.com/jiaoew1991"
-augroup END
+" EasyMotion
+nmap ss <Plug>(easymotion-s)
 
-augroup tern_for_vim
-    nnoremap <leader>td :TernDef<CR>
-    nnoremap <leader>tr :TernRefs<CR>
-augroup END
-
-augroup racer
-    let g:racer_cmd = "/Users/jiaoew/thirdparty/rust/vendor/racer/target/release/racer"
-    let $RUST_SRC_PATH="/Users/jiaoew/thirdparty/rust/src/"
-augroup END
-
-augroup vim_python_test_runner
-    nnoremap <leader>nf :NosetestFile<CR>
-    nnoremap <leader>nc :NosetestClass<CR>
-    nnoremap <leader>nm :NosetestMethod<CR>
-    nnoremap <leader>nb :NosetestBaseMethod<CR>
-    nnoremap <leader>rr :RerunLastTests<CR>
-augroup END
-
-augroup fugitive
-    nnoremap <leader>gs :Gstatus<CR>
-    nnoremap <leader>gp :Gpush<CR>
-    nnoremap <leader>gd :Gdiff<CR>
-    nnoremap <leader>gc :Gcommit<CR>
-    nnoremap <leader>gb :Gblame<CR>
-    nnoremap <leader>gl :Glog<CR>
-    nnoremap <leader>gw :Gwrite<CR>
-augroup END
-
-augroup gitgutter
-    let g:gitgutter_realtime = 1
-    let g:gitgutter_eager = 1
-augroup END
-
-augroup vim-session
-    let g:session_autosave = 'yes'
-    let g:session_autoload = 'yes'
-augroup END
-
-augroup rainbow
-    au VimEnter * RainbowParenthesesToggle
-    au Syntax * RainbowParenthesesLoadRound
-    au Syntax * RainbowParenthesesLoadSquare
-    au Syntax * RainbowParenthesesLoadBraces
-augroup END
-
-augroup delimiter
-    let delimitMate_expand_cr = 1
-augroup END
-
-augroup vim-jsx
-    let g:jsx_ext_required = 0
-augroup END
-
-augroup typescript-js
-    autocmd BufNewFile,BufRead *.ts     set filetype=typescript
-    autocmd BufNewFile,BufRead *.tsx    set filetype=typescript
-augroup END
+" VimInspector
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+let g:vimspector_install_gadgets = [ 'debugpy', 'delve', 'vscode-cpptools', 'CodeLLDB' ]

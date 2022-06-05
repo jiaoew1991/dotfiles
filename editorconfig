@@ -8,6 +8,10 @@ indent_style = space
 trim_trailing_whitespace = true
 insert_final_newline = true
 
+[*.{go}]
+indent_size = 4
+indent_style = tab
+
 [*.{html,css,less,json,jade,scala,sbt,coffee}]
 indent_size = 2
 
