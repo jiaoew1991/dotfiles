@@ -49,7 +49,7 @@ else
   set signcolumn=yes
 endif
 
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go', 'coc-clangd', 'coc-fzf-preview', 'coc-snippets', 'coc-sh', 'coc-translator']
+let g:coc_global_extensions = ['coc-json', 'coc-git']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by

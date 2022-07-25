@@ -9,150 +9,127 @@ an executable
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
 
 -- general
+vim.o.guifont = "DroidSansMono Nerd Font Mono:h12"
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "onedarker"
--- to disable icons and use a minimalist setup, uncomment the following
--- lvim.use_icons = false
+lvim.colorscheme = "dawnfox"
+
+-- make click not focus only not move cursor
+local no_cursor_move_on_focus = vim.api.nvim_create_augroup('NO_CURSOR_MOVE_ON_FOCUS', { clear = true })
+vim.api.nvim_create_autocmd('FocusLost', {
+  pattern = '*',
+  group = no_cursor_move_on_focus,
+  command = 'let g:oldmouse=&mouse | set mouse='
+})
+vim.api.nvim_create_autocmd('FocusGained', {
+  pattern = '*',
+  group = no_cursor_move_on_focus,
+  command = "if exists('g:oldmouse') | let &mouse=g:oldmouse | unlet g:oldmouse | endif"
+})
+
+-- neovide only
+vim.g.neovide_remember_window_size = true
+vim.g.neovide_input_use_logo = true
+vim.g.neovide_cursor_vfx_mode = "railgun"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.normal_mode["<S-F3>"] = ":lua require('goto-preview').goto_preview_definition()<CR>"
--- unmap a default keymapping
--- vim.keymap.del("n", "<C-Up>")
--- override a default keymapping
--- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
+lvim.keys.normal_mode["<F3>"] = "<Cmd>Telescope lsp_definitions<cr>"
+lvim.keys.normal_mode["<F4>"] = "<Cmd>Telescope lsp_references<cr>"
+lvim.keys.normal_mode["<D-e>"] = "<Cmd>Telescope buffers<cr>"
+lvim.keys.normal_mode["<D-p>"] = "<Cmd>Telescope commands<cr>"
+lvim.keys.insert_mode["<D-v>"] = "<ESC>\"+pa"
+lvim.keys.insert_mode['jk'] = false
+lvim.keys.insert_mode['jj'] = false
+lvim.keys.insert_mode['kk'] = false
+lvim.keys.insert_mode['kj'] = false
 
--- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
--- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
--- local _, actions = pcall(require, "telescope.actions")
--- lvim.builtin.telescope.defaults.mappings = {
---   -- for input mode
---   i = {
---     ["<C-j>"] = actions.move_selection_next,
---     ["<C-k>"] = actions.move_selection_previous,
---     ["<C-n>"] = actions.cycle_history_next,
---     ["<C-p>"] = actions.cycle_history_prev,
---   },
---   -- for normal mode
---   n = {
---     ["<C-j>"] = actions.move_selection_next,
---     ["<C-k>"] = actions.move_selection_previous,
---   },
--- }
-
--- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
--- }
-lvim.builtin.which_key.mappings["o"] = { "<cmd>SymbolsOutline<cr>", "Outline" }
+lvim.builtin.which_key.mappings["o"] = {
+  name = "Custom",
+  v = { "<cmd>SymbolsOutline<cr>", "View" },
+  g = { "<cmd>Telescope treesitter<cr>", "Goto" },
+  c = { ":Telescope grep_string cwd=", "Grep String" },
+}
 lvim.builtin.which_key.mappings["S"] = {
   name = "Session",
   c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
   l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
   Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
-
--- TODO: User Config for predefined plugins
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.alpha.active = true
-lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.notify.active = true
-lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
-
--- if you don't want all the parsers change this to a table of the ones you want
-lvim.builtin.treesitter.ensure_installed = {
-  "bash",
-  "c",
-  "cpp",
-  "javascript",
-  "json",
-  "lua",
-  "python",
-  "tsx",
-  "css",
-  "rust",
-  "java",
-  "yaml",
-  "go",
+lvim.builtin.which_key.mappings["g"] = {
+  name = "Git",
+  v = { "<cmd>Gvdiffsplit<cr>", "Diff view" },
+  b = { "<cmd>Git blame<cr>", "Blame" },
+  o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
+  C = { "<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)" },
+  c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
 }
 
-lvim.builtin.treesitter.ignore_install = { "haskell" }
+lvim.builtin.alpha.active = true
+lvim.builtin.alpha.mode = "startify"
+
+lvim.builtin.notify.active = true
+
+lvim.builtin.terminal.active = true
+
+lvim.builtin.nvimtree.setup.view.side = "left"
+
+lvim.builtin.gitsigns.active = false
+
+lvim.builtin.treesitter.ensure_installed = { "bash", "c", "cpp", "javascript", "json", "lua", "python", "tsx", "css",
+  "rust", "java", "yaml", "go", "markdown" }
 lvim.builtin.treesitter.highlight.enabled = true
 
-lvim.builtin.dap.active = false
--- generic LSP settings
+lvim.builtin.telescope.on_config_done = function(telescope)
+  pcall(telescope.load_extension, "neoclip")
+end
 
--- ---@usage disable automatic installation of servers
--- lvim.lsp.automatic_servers_installation = false
+lvim.builtin.dap.active = true
+lvim.builtin.dap.on_config_done = function(dap)
+  require("nvim-dap-virtual-text").setup {
+    commented = true,
+  }
 
--- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
--- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
--- local opts = {} -- check the lspconfig documentation for a list of all possible options
--- require("lvim.lsp.manager").setup("pyright", opts)
+  local dapui = require "dapui"
+  dapui.setup {} -- use default
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+  end
+  dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+  end
+  dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+  end
+end
 
--- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
--- ---`:LvimInfo` lists which server(s) are skiipped for the current filetype
--- vim.tbl_map(function(server)
---   return server ~= "emmet_ls"
--- end, lvim.lsp.automatic_configuration.skipped_servers)
+-- colorscheme
+lvim.builtin.lualine.style = "default"
+lvim.builtin.lualine.options.theme = "dawnfox"
+lvim.builtin.lualine.options.icons_enabled = true
+lvim.builtin.lualine.options.globalstatus = true
+lvim.builtin.lualine.extensions = { "nvim-tree", "quickfix", "symbols-outline", "fugitive" }
 
--- -- you can set a custom on_attach function that will be used for all the language servers
--- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
---   local function buf_set_option(...)
---     vim.api.nvim_buf_set_option(bufnr, ...)
---   end
---   --Enable completion triggered by <c-x><c-o>
---   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
-
--- -- set a formatter, this will override the language server formatting capabilities (if it exists)
--- local formatters = require "lvim.lsp.null-ls.formatters"
--- formatters.setup {
---   { command = "black", filetypes = { "python" } },
---   { command = "isort", filetypes = { "python" } },
---   {
---     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
---     command = "prettier",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     extra_args = { "--print-with", "100" },
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "typescript", "typescriptreact" },
---   },
--- }
-
--- -- set additional linters
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { command = "flake8", filetypes = { "python" } },
---   {
---     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
---     command = "shellcheck",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     extra_args = { "--severity", "warning" },
---   },
---   {
---     command = "codespell",
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "javascript", "python" },
---   },
--- }
-
+-- cmp configuration
+local cmp = require("cmp")
+lvim.builtin.cmp.formatting.source_names.cmdline = "(cmdline)"
+lvim.builtin.cmp.formatting.source_names.cmdline_history = "(history)"
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "cmdline" },
+    { name = "cmdline_history" },
+    { name = "path" }
+  })
+})
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' },
+    { name = "cmdline_history" },
+  }
+})
 -- Additional Plugins
 lvim.plugins = {
   {
@@ -165,43 +142,103 @@ lvim.plugins = {
     module = "persistence",
     config = function()
       require("persistence").setup {
-        dir = vim.fn.expand(vim.fn.stdpath("config") .. "/session/", false, true),
         options = { "buffers", "curdir", "tabpages", "winsize" },
+        dir = vim.fn.expand(vim.fn.stdpath("config") .. "/session/", false, false),
       }
     end,
   },
   {
-    "rmagatti/goto-preview",
+    "klen/nvim-config-local",
     config = function()
-      require('goto-preview').setup {
-        width = 120, -- Width of the floating window
-        height = 25, -- Height of the floating window
-        default_mappings = false, -- Bind default mappings
-        debug = true, -- Print debug information
-        opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-        -- You can use "default_mappings = true" setup option
-        -- Or explicitly set keybindings
-        -- vim.api.nvim_set_keymap("n", "gR", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true });
-        -- vim.cmd("nnoremap Gd <cmd>lua require('goto-preview').goto_preview_definition()<CR>");
-        -- vim.cmd("nnoremap Gi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>");
-        -- vim.cmd("nnoremap Gr <cmd>lua require('goto-preview').goto_preview_references()<CR>");
-        -- vim.cmd("nnoremap GP <cmd>lua require('goto-preview').close_all_win()<CR>");
+      require('config-local').setup {
+        config_files = { "vimrc.lua" }, -- Config file patterns to load (lua supported)
+        lookup_parents = true
       }
     end,
   },
+  {
+    "catppuccin/nvim",
+    as = "catppuccin",
+  },
+  {
+    "EdenEast/nightfox.nvim",
+    config = function()
+      require('nightfox').setup({
+        options = {
+          styles = {
+            comments = "italic",
+            keywords = "bold",
+            types = "italic,bold",
+          }
+        }
+      })
+    end
+  },
+  {
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup()
+    end
+  },
+  {
+    "tpope/vim-dispatch",
+  },
+  {
+    "tpope/vim-fugitive",
+    cmd = { "G", "Git", "Gdiffsplit" },
+    ft = { "fugitive" }
+  },
+  {
+    "pwntester/octo.nvim",
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'kyazdani42/nvim-web-devicons',
+    },
+    config = function()
+      require "octo".setup()
+    end
+  },
+  {
+    "hrsh7th/cmp-cmdline"
+  },
+  {
+    "dmitmel/cmp-cmdline-history",
+  },
+  {
+    "kevinhwang91/nvim-bqf",
+    event = { "BufRead", "BufNew" },
+    config = function()
+      require("bqf").setup({
+        auto_enable = true,
+        preview = {
+          win_height = 15,
+          win_vheight = 15,
+          delay_syntax = 80,
+          border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+        },
+        func_map = {
+          vsplit = "v",
+          split = "s",
+          ptogglemode = "z,",
+          stoggleup = "",
+        },
+      })
+    end,
+  },
+  {
+    "rcarriga/nvim-dap-ui",
+    requires = {
+      "mfussenegger/nvim-dap",
+      "alpha2phi/DAPInstall.nvim",
+      "theHamsta/nvim-dap-virtual-text",
+      "leoluz/nvim-dap-go"
+    },
+  },
+  {
+    "simrat39/rust-tools.nvim",
+    config = function()
+      require("rust-tools").setup({})
+    end
+  },
 }
-
--- Autocommands (https://neovim.io/doc/user/autocmd.html)
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.json", "*.jsonc" },
---   -- enable wrap mode for json files only
---   command = "setlocal wrap",
--- })
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "zsh",
---   callback = function()
---     -- let treesitter use bash highlight for zsh files as well
---     require("nvim-treesitter.highlight").attach(0, "bash")
---   end,
--- })
