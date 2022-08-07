@@ -58,6 +58,7 @@ return packer.startup(function(use)
   use({ "lukas-reineke/indent-blankline.nvim" })
   use({ "goolord/alpha-nvim" })
   use({ "folke/which-key.nvim" })
+  use({ "theHamsta/nvim-dap-virtual-text" })
   use({ "Tastyep/structlog.nvim" })
 
   -- Colorschemes
@@ -100,7 +101,6 @@ return packer.startup(function(use)
 
   -- DAP
   use({ "mfussenegger/nvim-dap" })
-  use({ "theHamsta/nvim-dap-virtual-text" })
   use({ "alpha2phi/DAPInstall.nvim" })
   use({ "rcarriga/nvim-dap-ui" })
 
@@ -118,17 +118,7 @@ return packer.startup(function(use)
     cmd = { "G", "Git", "Gdiffsplit" },
     ft = { "fugitive" }
   })
-  use({
-    "pwntester/octo.nvim",
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'kyazdani42/nvim-web-devicons',
-    },
-    config = function()
-      require "octo".setup()
-    end
-  })
+  use({ "pwntester/octo.nvim" })
 
   -- config
   use({
@@ -153,6 +143,7 @@ return packer.startup(function(use)
     end
   })
   use({ "wakatime/vim-wakatime" })
+  use({ "simrat39/symbols-outline.nvim" })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

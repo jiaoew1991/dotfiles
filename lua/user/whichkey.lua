@@ -94,10 +94,12 @@ local mappings = {
 
   b = {
     name = "Buffer",
-    f = { "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_ivy{previewer = false})<cr>", "Buffers" },
+    f = { "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_ivy{previewer = false})<cr>",
+      "Buffers" },
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
     n = { "<cmd>bnext<cr>", "Next Buffer" },
     p = { "<cmd>bprev<cr>", "Prev Buffer" },
+    x = { "<cmd>bdelete<cr>", "Close Buffer" },
   },
 
   p = {
@@ -205,12 +207,12 @@ local mappings = {
 
   o = {
     name = "Custom",
-    v = { "<cmd>LSoutlineToggle<cr>", "View" },
+    v = { "<cmd>SymbolsOutline<cr>", "View" },
     g = { "<cmd>Telescope treesitter<cr>", "Goto" },
     d = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Diagnostics" },
     c = { ":Telescope grep_string cwd=", "Grep String" },
     a = { "<cmd>lua require('lspsaga.codeaction').code_action()<cr>", "Code Action" },
-    r = { "<cmd>lua require('user.reload').reload()<cr>", "Reload Neovim Config" }
+    r = { "<cmd>lua ReloadConfig()<cr>", "Reload Neovim Config" }
   }
 }
 
