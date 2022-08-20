@@ -134,6 +134,9 @@ return packer.startup(function(use)
   -- Task
   use({ "tpope/vim-dispatch" })
 
+  -- Lanaguage Specific
+  use({ "simrat39/rust-tools.nvim" })
+
   -- others
   use({ "kevinhwang91/nvim-bqf" })
   use({
@@ -144,6 +147,7 @@ return packer.startup(function(use)
   })
   use({ "wakatime/vim-wakatime" })
   use({ "simrat39/symbols-outline.nvim" })
+  use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async"})
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
