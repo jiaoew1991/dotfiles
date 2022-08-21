@@ -89,6 +89,7 @@ return packer.startup(function(use)
   use({ "hrsh7th/cmp-cmdline" })
   use({ "dmitmel/cmp-cmdline-history" })
   use({ "glepnir/lspsaga.nvim" })
+  use({ "onsails/lspkind.nvim" })
 
   -- snippets
   use({ "L3MON4D3/LuaSnip" }) --snippet engine
@@ -147,7 +148,7 @@ return packer.startup(function(use)
   })
   use({ "wakatime/vim-wakatime" })
   use({ "simrat39/symbols-outline.nvim" })
-  use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async"})
+  use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
