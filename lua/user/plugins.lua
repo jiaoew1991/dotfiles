@@ -99,6 +99,16 @@ return packer.startup(function(use)
   use({ "neovim/nvim-lspconfig" }) -- enable LSP
   use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
   use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
+  use({
+    "RRethy/vim-illuminate",
+    config = function()
+      require("illuminate").configure {
+        filetypes_allowlist = { "bash", "c", "cpp", "javascript", "json", "lua", "python", "tsx", "css",
+          "rust", "java", "yaml", "go", "markdown" },
+        providers = { 'lsp' },
+      }
+    end
+  }) -- for highlight variables under cursor
 
   -- DAP
   use({ "mfussenegger/nvim-dap" })

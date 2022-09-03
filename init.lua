@@ -23,5 +23,6 @@ require "user.autocommands"
 require "user.bqf"
 require "user.dap"
 require "user.ufo"
+require "user.octo"
 
 require "user.neovide"
