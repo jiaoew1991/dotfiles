@@ -44,9 +44,8 @@ return packer.startup(function(use)
 
   use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
   use({ "nvim-lua/plenary.nvim" }) -- Useful lua functions used by lots of plugins
-  use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
+  -- use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
   use({ "numToStr/Comment.nvim" })
-  use({ "JoosepAlviste/nvim-ts-context-commentstring" })
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "kyazdani42/nvim-tree.lua" })
   use({ "akinsho/bufferline.nvim" })
@@ -80,16 +79,19 @@ return packer.startup(function(use)
 
 
   -- cmp plugins
-  use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
-  use({ "hrsh7th/cmp-buffer" }) -- buffer completions
-  use({ "hrsh7th/cmp-path" }) -- path completions
-  use({ "saadparwaiz1/cmp_luasnip" }) -- snippet completions
-  use({ "hrsh7th/cmp-nvim-lsp" })
-  use({ "hrsh7th/cmp-nvim-lua" })
-  use({ "hrsh7th/cmp-cmdline" })
-  use({ "dmitmel/cmp-cmdline-history" })
+  -- use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
+  -- use({ "hrsh7th/cmp-buffer" }) -- buffer completions
+  -- use({ "hrsh7th/cmp-path" }) -- path completions
+  -- use({ "saadparwaiz1/cmp_luasnip" }) -- snippet completions
+  -- use({ "hrsh7th/cmp-nvim-lsp" })
+  -- use({ "hrsh7th/cmp-nvim-lua" })
+  -- use({ "hrsh7th/cmp-cmdline" })
+  -- use({ "dmitmel/cmp-cmdline-history" })
   use({ "glepnir/lspsaga.nvim" })
   use({ "onsails/lspkind.nvim" })
+  use({ "ms-jpq/coq_nvim", branch = "coq" })
+  use({ "ms-jpq/coq.artifacts", branch = "artifacts" })
+  use({ "ms-jpq/coq.thirdparty", branch = "3p" })
 
   -- snippets
   use({ "L3MON4D3/LuaSnip" }) --snippet engine
@@ -117,10 +119,10 @@ return packer.startup(function(use)
 
   -- Telescope
   use({ "nvim-telescope/telescope.nvim" })
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = "make" }
 
   -- Treesitter
-  use({ "nvim-treesitter/nvim-treesitter" })
+  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 
   -- Git and Github
   use({ "lewis6991/gitsigns.nvim" })
