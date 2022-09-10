@@ -5,9 +5,11 @@ end
 
 
 lspsaga.init_lsp_saga({
-  saga_winblend = 40,
   symbol_in_winbar = {
-    enable = true,
+    enable = false,
   },
-
+  show_outline = {
+    jump_key = "<CR>",
+    auto_refresh = true,
+  }
 })

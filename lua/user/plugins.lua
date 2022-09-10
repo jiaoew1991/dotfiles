@@ -44,7 +44,7 @@ return packer.startup(function(use)
 
   use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
   use({ "nvim-lua/plenary.nvim" }) -- Useful lua functions used by lots of plugins
-  -- use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
+  use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
   use({ "numToStr/Comment.nvim" })
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "kyazdani42/nvim-tree.lua" })
@@ -79,19 +79,16 @@ return packer.startup(function(use)
 
 
   -- cmp plugins
-  -- use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
-  -- use({ "hrsh7th/cmp-buffer" }) -- buffer completions
-  -- use({ "hrsh7th/cmp-path" }) -- path completions
-  -- use({ "saadparwaiz1/cmp_luasnip" }) -- snippet completions
-  -- use({ "hrsh7th/cmp-nvim-lsp" })
-  -- use({ "hrsh7th/cmp-nvim-lua" })
-  -- use({ "hrsh7th/cmp-cmdline" })
-  -- use({ "dmitmel/cmp-cmdline-history" })
+  use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
+  use({ "hrsh7th/cmp-buffer" }) -- buffer completions
+  use({ "hrsh7th/cmp-path" }) -- path completions
+  use({ "saadparwaiz1/cmp_luasnip" }) -- snippet completions
+  use({ "hrsh7th/cmp-nvim-lsp" })
+  use({ "hrsh7th/cmp-nvim-lua" })
+  use({ "hrsh7th/cmp-cmdline" })
+  use({ "dmitmel/cmp-cmdline-history" })
   use({ "glepnir/lspsaga.nvim" })
   use({ "onsails/lspkind.nvim" })
-  use({ "ms-jpq/coq_nvim", branch = "coq" })
-  use({ "ms-jpq/coq.artifacts", branch = "artifacts" })
-  use({ "ms-jpq/coq.thirdparty", branch = "3p" })
 
   -- snippets
   use({ "L3MON4D3/LuaSnip" }) --snippet engine
@@ -159,7 +156,15 @@ return packer.startup(function(use)
     end
   })
   use({ "wakatime/vim-wakatime" })
-  use({ "simrat39/symbols-outline.nvim" })
+  use({
+    "simrat39/symbols-outline.nvim",
+    config = function()
+      require("symbols-outline").setup({
+        auto_preview = true,
+        preview_bg_highlight = "Comment",
+      })
+    end
+  })
   use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
   -- Automatically set up your configuration after cloning packer.nvim
