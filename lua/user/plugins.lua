@@ -87,17 +87,17 @@ return packer.startup(function(use)
   use({ "hrsh7th/cmp-nvim-lua" })
   use({ "hrsh7th/cmp-cmdline" })
   use({ "dmitmel/cmp-cmdline-history" })
-  use({ "glepnir/lspsaga.nvim" })
-  use({ "onsails/lspkind.nvim" })
 
   -- snippets
-  use({ "L3MON4D3/LuaSnip" }) --snippet engine
-  use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
+  use({ "hrsh7th/cmp-vsnip" })
+  use({ "hrsh7th/vim-vsnip" })
 
   -- LSP
   use({ "neovim/nvim-lspconfig" }) -- enable LSP
   use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
   use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
+  use({ "glepnir/lspsaga.nvim" })
+  use({ "onsails/lspkind.nvim" })
   use({
     "RRethy/vim-illuminate",
     config = function()
