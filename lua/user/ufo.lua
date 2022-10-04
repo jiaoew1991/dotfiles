@@ -51,8 +51,14 @@ ufo.setup({ open_fold_hl_timeout = 150, close_fold_kinds = { 'imports', 'comment
   fold_virt_text_handler = handler
 })
 
-vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
-vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-vim.keymap.set('n', 'zc', '<cmd>foldclose<cr>')
+local which_key = require("which-key")
+
+local opts = { mode = "n", noremap = true, silent = true }
+local mappings = {
+  ["zR"] = { require('ufo').openAllFolds, 'Open all folds' },
+  ["zM"] = { require('ufo').closeAllFolds, 'Close all folds' },
+  ["zr"] = { require('ufo').openFoldsExceptKinds, 'Open folds expect kinds' },
+  ["zm"] = { require('ufo').closeFoldsWith, 'Close folds with' },
+  ["zc"] = { "<cmd>foldclose<CR>", "Close fold" },
+}
+which_key.register(mappings, opts)

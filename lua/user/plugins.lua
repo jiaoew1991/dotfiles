@@ -48,6 +48,14 @@ return packer.startup(function(use)
   use({ "numToStr/Comment.nvim" })
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "kyazdani42/nvim-tree.lua" })
+  use {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    requires = {
+      "MunifTanjim/nui.nvim",
+      { "s1n7ax/nvim-window-picker", tag = "v1.3" },
+    }
+  }
   use({ "akinsho/bufferline.nvim" })
   use({ "moll/vim-bbye" })
   use({ "nvim-lualine/lualine.nvim" })
@@ -147,7 +155,7 @@ return packer.startup(function(use)
   -- Lanaguage Specific
   use({ "simrat39/rust-tools.nvim" })
 
-  -- others
+  -- UI
   use({ "kevinhwang91/nvim-bqf" })
   use({
     "j-hui/fidget.nvim",
@@ -155,6 +163,17 @@ return packer.startup(function(use)
       require("fidget").setup()
     end
   })
+  use { "anuvyklack/windows.nvim",
+    requires = {
+      "anuvyklack/middleclass",
+      "anuvyklack/animation.nvim"
+    },
+  }
+
+  -- fold
+  use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
+
+  -- others
   use({ "wakatime/vim-wakatime" })
   use({
     "simrat39/symbols-outline.nvim",
@@ -165,7 +184,6 @@ return packer.startup(function(use)
       })
     end
   })
-  use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

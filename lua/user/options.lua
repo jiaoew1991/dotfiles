@@ -40,5 +40,10 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+
+vim.o.winwidth = 10
+vim.o.winminwidth = 10
+vim.o.equalalways = false
+
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
