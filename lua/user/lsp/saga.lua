@@ -33,11 +33,9 @@ local function config_winbar_or_statusline()
     local sym
     if ok then sym = symbolwinbar.get_symbol_node() end
     local win_val = ''
-    win_val = get_file_name(true) -- set to true to include path
+    win_val = get_file_name(false) -- set to true to include path
     if sym ~= nil then win_val = win_val .. sym end
     vim.wo.winbar = win_val
-    -- if work in statusline
-    vim.wo.stl = win_val
   end
 end
 

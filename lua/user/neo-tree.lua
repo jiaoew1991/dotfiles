@@ -217,6 +217,9 @@ neotree.setup({
         ["gg"] = "git_commit_and_push",
       }
     }
+  },
+  source_selector = {
+    -- winbar = true
   }
 })
 
