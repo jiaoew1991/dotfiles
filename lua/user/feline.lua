@@ -257,7 +257,7 @@ local function get_diag(str)
   local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity[str] })
   local count = #diagnostics
 
-  return (count > 0) and " " .. count .. " " or ""
+  return (count > 0) and " " .. count .. " " or " - "
 end
 
 ---Get highlight group from vi mode
@@ -276,7 +276,7 @@ end
 local function file_info()
   local list = {}
   if vim.bo.readonly then
-    table.insert(list, "🔒")
+    table.insert(list, "")
   end
 
   if vim.bo.modified then

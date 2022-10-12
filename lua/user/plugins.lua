@@ -58,8 +58,8 @@ return packer.startup(function(use)
   }
   use({ "akinsho/bufferline.nvim" })
   use({ "moll/vim-bbye" })
-  -- use({ "nvim-lualine/lualine.nvim" })
-  use({ "feline-nvim/feline.nvim" })
+  use({ "nvim-lualine/lualine.nvim" })
+  -- use({ "feline-nvim/feline.nvim" })
   use({ "akinsho/toggleterm.nvim" })
   use({ "ahmedkhalf/project.nvim" })
   use({ "lewis6991/impatient.nvim" })
@@ -70,7 +70,6 @@ return packer.startup(function(use)
   use({ "Tastyep/structlog.nvim" })
 
   -- Colorschemes
-  use({ "lunarvim/darkplus.nvim" })
   use({
     "EdenEast/nightfox.nvim",
     config = function()
@@ -155,6 +154,7 @@ return packer.startup(function(use)
 
   -- Lanaguage Specific
   use({ "simrat39/rust-tools.nvim" })
+  use({ "golang/vscode-go" })
 
   -- UI
   use({ "kevinhwang91/nvim-bqf" })

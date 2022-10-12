@@ -78,6 +78,14 @@ lspsaga.init_lsp_saga({
       end
     end
   },
+  max_preview_lines = 100,
+  finder_action_keys = {
+    open = "<cr>",
+    vsplit = "v",
+    split = "s",
+    tabe = "t",
+    quit = "q",
+  },
   show_outline = {
     jump_key = "<CR>",
     auto_refresh = true,
