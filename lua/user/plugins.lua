@@ -59,7 +59,6 @@ return packer.startup(function(use)
   use({ "akinsho/bufferline.nvim" })
   use({ "moll/vim-bbye" })
   use({ "nvim-lualine/lualine.nvim" })
-  -- use({ "feline-nvim/feline.nvim" })
   use({ "akinsho/toggleterm.nvim" })
   use({ "ahmedkhalf/project.nvim" })
   use({ "lewis6991/impatient.nvim" })
@@ -102,7 +101,6 @@ return packer.startup(function(use)
 
   -- LSP
   use({ "neovim/nvim-lspconfig" }) -- enable LSP
-  use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
   use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
   use({ "glepnir/lspsaga.nvim" })
   use({ "onsails/lspkind.nvim" })
@@ -119,12 +117,12 @@ return packer.startup(function(use)
 
   -- DAP
   use({ "mfussenegger/nvim-dap" })
-  use({ "alpha2phi/DAPInstall.nvim" })
   use({ "rcarriga/nvim-dap-ui" })
 
   -- Telescope
   use({ "nvim-telescope/telescope.nvim" })
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = "make" }
+  use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+  use({ "princejoogie/dir-telescope.nvim" })
 
   -- Treesitter
   use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
@@ -136,7 +134,6 @@ return packer.startup(function(use)
     cmd = { "G", "Git", "Gdiffsplit" },
     ft = { "fugitive" }
   })
-  use({ "pwntester/octo.nvim" })
 
   -- config
   use({
@@ -170,6 +167,10 @@ return packer.startup(function(use)
       "anuvyklack/animation.nvim"
     },
   }
+
+  --Installer
+  use({ "williamboman/mason.nvim" })
+  use({ "williamboman/mason-lspconfig.nvim" })
 
   -- fold
   use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })

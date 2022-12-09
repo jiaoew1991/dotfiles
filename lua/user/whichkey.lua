@@ -177,6 +177,8 @@ local mappings = {
     R = { "<cmd>Telescope registers<cr>", "Registers" },
     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
     C = { "<cmd>Telescope commands<cr>", "Commands" },
+    f = { "<cmd>Telescope dir find_files<cr>", "Find File in Dir" },
+    F = { "<cmd>Telescope dir live_grep<cr>", "Grep in Dir" },
   },
 
   t = {
