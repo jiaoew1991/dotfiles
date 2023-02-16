@@ -144,8 +144,7 @@ local mappings = {
         f = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Format" },
         i = { "<cmd>LspInfo<cr>", "Info" },
         I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
-        j = {
-            "<cmd>lua vim.diagnostic.goto_next()<CR>",
+        j = { "<cmd>lua vim.diagnostic.goto_next()<CR>",
             "Next Diagnostic",
         },
         k = {
@@ -178,10 +177,6 @@ local mappings = {
     },
     t = {
         name = "Terminal",
-        n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
-        u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
-        t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
-        p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
         f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
         h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
         v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
@@ -204,12 +199,12 @@ local mappings = {
     },
     o = {
         name = "Custom",
-        -- v = { "<cmd>SymbolsOutline<cr>", "View" },
         v = { "<cmd>Lspsaga outline<cr>", "Show Outline" },
         g = { "<cmd>Telescope treesitter<cr>", "Goto" },
         d = { "<cmd>Lspsaga show_line_diagnostics<cr>", "Show Diagnostics" },
         c = { "<cmd>Telescope grep_string cwd=", "Grep String" },
-        r = { "<cmd>lua ReloadConfig()<cr>", "Reload Neovim Config" }
+        r = { "<cmd>lua ReloadConfig()<cr>", "Reload Neovim Config" },
+        s = { "<cmd><cr>", "Copilot status" },
     }
 }
 

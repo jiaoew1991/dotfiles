@@ -94,6 +94,7 @@ return packer.startup(function(use)
       use({ "hrsh7th/cmp-nvim-lua" })
       use({ "hrsh7th/cmp-cmdline" })
       use({ "dmitmel/cmp-cmdline-history" })
+      use({ "hrsh7th/cmp-copilot" })
 
       -- snippets
       use({ "hrsh7th/cmp-vsnip" })
