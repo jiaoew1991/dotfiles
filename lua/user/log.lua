@@ -44,31 +44,32 @@ function Log:init()
   local log_level = Log.levels.DEBUG
   local nvim_log = {
     nvim = {
-      sinks = {
-        structlog.sinks.Console(log_level, {
-          async = true,
+      pipelines = {
+        {
+          level = log_level,
           processors = {
-            structlog.processors.Namer(),
-            structlog.processors.StackWriter({ "line", "file" }, { max_parents = 0, stack_level = 2 }),
-            structlog.processors.Timestamper "%H:%M:%S",
+            structlog.processors.StackWriter({ "line", "file" }, { max_parents = 0, stack_level = 0 }),
+            structlog.processors.Timestamper("%H:%M:%S"),
           },
           formatter = structlog.formatters.FormatColorizer(--
-            "%s [%-5s] %s: %-30s",
+            "%s [%s] %s: %-30s",
             { "timestamp", "level", "logger_name", "msg" },
             { level = structlog.formatters.FormatColorizer.color_level() }
           ),
-        }),
-        structlog.sinks.File(log_level, self:get_path(), {
+          sink = structlog.sinks.Console(),
+        },
+        {
+          level = log_level,
           processors = {
-            structlog.processors.Namer(),
-            structlog.processors.StackWriter({ "line", "file" }, { max_parents = 3, stack_level = 2 }),
-            structlog.processors.Timestamper "%F %H:%M:%S",
+            structlog.processors.StackWriter({ "line", "file" }, { max_parents = 3 }),
+            structlog.processors.Timestamper("%H:%M:%S"),
           },
           formatter = structlog.formatters.Format(--
-            "%s [%-5s] %s: %-30s",
+            "%s [%s] %s: %-30s",
             { "timestamp", "level", "logger_name", "msg" }
           ),
-        }),
+          sink = structlog.sinks.File(self:get_path()),
+        }
       },
     },
   }
@@ -126,8 +127,8 @@ function Log:configure_notifications(notif_handle)
     },
     formatter = structlog.formatters.Format(--
       "%s",
-      { "msg" },
-      { blacklist_all = true }
+      { "msg" }
+    -- { blacklist_all = true }
     ),
     -- This should probably not be hard-coded
     params_map = {

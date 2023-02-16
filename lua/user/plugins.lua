@@ -47,13 +47,12 @@ return packer.startup(function(use)
   use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
   use({ "numToStr/Comment.nvim" })
   use({ "kyazdani42/nvim-web-devicons" })
-  -- use({ "kyazdani42/nvim-tree.lua" })
+  use({ "s1n7ax/nvim-window-picker", tag = "v1.5" })
   use {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
     requires = {
       "MunifTanjim/nui.nvim",
-      { "s1n7ax/nvim-window-picker", tag = "v1.3" },
     }
   }
   use({ "akinsho/bufferline.nvim" })
@@ -66,6 +65,7 @@ return packer.startup(function(use)
   use({ "goolord/alpha-nvim" })
   use({ "folke/which-key.nvim" })
   use({ "theHamsta/nvim-dap-virtual-text" })
+  use({ "rcarriga/nvim-notify" })
   use({ "Tastyep/structlog.nvim" })
 
   -- Colorschemes
@@ -149,7 +149,7 @@ return packer.startup(function(use)
   -- Task
   use({ "tpope/vim-dispatch" })
 
-  -- Lanaguage Specific
+  -- Language Specific
   use({ "simrat39/rust-tools.nvim" })
   use({ "golang/vscode-go" })
 

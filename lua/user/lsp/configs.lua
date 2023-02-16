@@ -5,17 +5,17 @@ end
 
 local lspconfig = require("lspconfig")
 
-local servers = { "jsonls", "sumneko_lua", "rust_analyzer", "clangd", "gopls", "pyright" }
+local servers = { "jsonls", "lua_ls", "rust_analyzer", "clangd", "gopls", "pyright" }
 
 require("mason").setup()
 lsp_installer.setup({
-  ensure_installed = servers,
+    ensure_installed = servers,
 })
 
 for _, server in pairs(servers) do
   local opts = {
-    on_attach = require("user.lsp.handlers").on_attach,
-    capabilities = require("user.lsp.handlers").capabilities,
+      on_attach = require("user.lsp.handlers").on_attach,
+      capabilities = require("user.lsp.handlers").capabilities,
   }
   local has_custom_opts, server_custom_opts = pcall(require, "user.lsp.settings." .. server)
   if has_custom_opts then
