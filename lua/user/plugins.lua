@@ -53,11 +53,11 @@ return packer.startup(function(use)
         end
     })
     use({ "numToStr/Comment.nvim" })
-    use({ "kyazdani42/nvim-web-devicons" })
+    use({ "nvim-tree/nvim-web-devicons" })
     use({ "s1n7ax/nvim-window-picker", tag = "v1.5" })
     use {
         "nvim-neo-tree/neo-tree.nvim",
-        branch = "v2.x",
+        branch = "v3.x",
         requires = {
             "MunifTanjim/nui.nvim",
         }
@@ -69,7 +69,13 @@ return packer.startup(function(use)
     use({ "ahmedkhalf/project.nvim" })
     use({ "lewis6991/impatient.nvim" })
     use({ "lukas-reineke/indent-blankline.nvim" })
-    use({ "goolord/alpha-nvim" })
+    use({
+        'goolord/alpha-nvim',
+        event = "VimEnter",
+        config = function()
+            require 'alpha'.setup(require 'alpha.themes.startify'.config)
+        end
+    })
     use({ "folke/which-key.nvim" })
     use({ "theHamsta/nvim-dap-virtual-text" })
     use({ "rcarriga/nvim-notify" })
@@ -109,7 +115,7 @@ return packer.startup(function(use)
     -- LSP
     use({ "neovim/nvim-lspconfig" })           -- enable LSP
     use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
-    use({ "glepnir/lspsaga.nvim" })
+    use({ "nvimdev/lspsaga.nvim" })
     use({ "onsails/lspkind.nvim" })
     use({
         "RRethy/vim-illuminate",
@@ -164,6 +170,7 @@ return packer.startup(function(use)
     use({ "kevinhwang91/nvim-bqf" })
     use({
         "j-hui/fidget.nvim",
+        tag = "legacy",
         config = function()
             require("fidget").setup()
         end
