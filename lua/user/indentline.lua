@@ -1,16 +1,21 @@
-local status_ok, indent_blankline = pcall(require, "ibl")
-if not status_ok then
-    return
-end
+local M = {
+  "lukas-reineke/indent-blankline.nvim",
+  commit = "8299fe7703dfff4b1752aeed271c3b95281a952d",
+  event = "BufReadPre",
+}
 
-indent_blankline.setup({
-    -- show_end_of_line = true,
-    -- space_char_blankline = " ",
-    show_current_context = true,
-    -- show_current_context_start = true,
-    -- char_highlight_list = {
-    --   "IndentBlanklineIndent1",
-    --   "IndentBlanklineIndent2",
-    --   "IndentBlanklineIndent3",
-    -- },
-})
+M.opts = {
+  char = "▏",
+  show_trailing_blankline_indent = false,
+  show_first_indent_level = true,
+  use_treesitter = true,
+  show_current_context = true,
+  buftype_exclude = { "terminal", "nofile" },
+  filetype_exclude = {
+    "help",
+    "packer",
+    "NvimTree",
+  },
+}
+
+return M
