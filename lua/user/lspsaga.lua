@@ -24,7 +24,7 @@ function M.config()
         },
         outline = {
             jump = "<CR>",
-            layout = "float",
+            layout = "normal",
         },
     })
 end

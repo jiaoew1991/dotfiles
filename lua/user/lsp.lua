@@ -1,17 +1,12 @@
--- require("user.lsp.saga")
--- require("user.lsp.configs")
--- require("user.lsp.handlers").setup()
--- require("user.lsp.nullls")
-
 local M = {
     "neovim/nvim-lspconfig",
-    commit = "649137cbc53a044bffde36294ce3160cb18f32c7",
+    commit = "d1bab4cf4b69e49d6058028fd933d8ef5e74e680",
     lazy = false,
     event = { "BufReadPre" },
     dependencies = {
         {
             "hrsh7th/cmp-nvim-lsp",
-            commit = "0e6b2ed705ddcff9738ec4ea838141654f12eeef",
+            commit = "5af77f54de1b16c34b23cba810150689a3a90312",
         },
         {
             "nvimdev/lspsaga.nvim",

@@ -36,13 +36,14 @@ vim.cmd [[
 --   autocmd!
 --   autocmd BufWritePre * lua vim.lsp.buf.formatting()
 -- augroup end
-local filter = require("utils.lsp-helper").format_filter
-
+-- local filter = require("utils.lsp-helper").format_filter
+--
 vim.api.nvim_create_augroup("nvim_format_on_save", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = "nvim_format_on_save",
   pattern = "*",
   callback = function()
-    require("user.lsp.utils").format { timeout_ms = 1000, filter = filter }
+    -- require("user.lsp.utils").format { timeout_ms = 1000, filter = filter }
+     vim.lsp.buf.format({ timeout_ms = 4000, filter = filter })
   end,
 })
