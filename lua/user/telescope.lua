@@ -8,6 +8,9 @@ local M = {
             "nvim-lua/plenary.nvim",
             "ahmedkhalf/project.nvim",
             "princejoogie/dir-telescope.nvim",
+            "isak102/telescope-git-file-history.nvim",
+            dependencies = { "tpope/vim-fugitive" }
+
         },
     },
 }
@@ -31,6 +34,7 @@ M.opts = {
 
 function M.config()
     require("telescope").load_extension("dir")
+    require("telescope").load_extension("git_file_history")
 end
 
 return M
