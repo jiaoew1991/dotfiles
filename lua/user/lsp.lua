@@ -1,12 +1,10 @@
 local M = {
     "neovim/nvim-lspconfig",
-    -- commit = "d1bab4cf4b69e49d6058028fd933d8ef5e74e680",
     lazy = false,
     event = { "BufReadPre" },
     dependencies = {
         {
             "hrsh7th/cmp-nvim-lsp",
-            -- commit = "5af77f54de1b16c34b23cba810150689a3a90312",
         },
         {
             "nvimdev/lspsaga.nvim",
@@ -39,23 +37,33 @@ function M.config()
     local lspconfig = require "lspconfig"
     local on_attach = function(client, bufnr)
         lsp_keymaps(bufnr)
+        if client.name == 'ruff_lsp' then
+            client.server_capabilities.hoverProvider = false
+        end
         require("illuminate").on_attach(client)
     end
 
     for _, server in pairs(require("utils").servers) do
-        Opts = {
+        opts = {
             on_attach = on_attach,
             capabilities = capabilities,
         }
 
         server = vim.split(server, "@")[1]
 
-        local require_ok, conf_opts = pcall(require, "settings." .. server)
-        if require_ok then
-            Opts = vim.tbl_deep_extend("force", conf_opts, Opts)
+        -- load custom settings from require('utils').settings.<server>
+        custom = require('utils').settings[server]
+        if custom == nil then
+            custom = {}
         end
+        opts = vim.tbl_deep_extend("force", custom, opts)
 
-        lspconfig[server].setup(Opts)
+        -- local require_ok, conf_opts = pcall(require, "settings." .. server)
+        -- if require_ok then
+        --     opts = vim.tbl_deep_extend("force", conf_opts, opts)
+        -- end
+
+        lspconfig[server].setup(opts)
     end
 
     local signs = {
