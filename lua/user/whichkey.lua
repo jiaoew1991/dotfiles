@@ -1,6 +1,6 @@
 local M = {
     "folke/which-key.nvim",
-    commit = "v1.6.0",
+    commit = "v3.13.2",
     event = "VeryLazy",
     opts = {
         icons = {

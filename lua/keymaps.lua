@@ -42,8 +42,8 @@ maps.v["<"] = { "<gv", desc = "Indent to the left" }
 maps.v[">"] = { ">gv", desc = "Indent to the right" }
 
 maps.n["<leader>e"] = { "<cmd>Neotree toggle=true action=show reveal<cr>", desc = "Toggle explorer" }
-maps.n["<leader>f"] = { "<cmd>Telescope find_files theme=ivy<cr>", desc = "Find files" }
-maps.n["<leader>F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", desc = "Find Text" }
+maps.n["<leader>f"] = { "<cmd>Telescope find_files<cr>", desc = "Find files" }
+maps.n["<leader>F"] = { "<cmd>Telescope live_grep<cr>", desc = "Find Text" }
 
 maps.n["<leader>s"] = sections.s
 maps.n["<leader>sb"] = { "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" }
@@ -70,6 +70,7 @@ maps.n["<leader>gs"] = { "<cmd>lua require('gitsigns').stage_hunk()<cr>", desc =
 maps.n["<leader>gS"] = { "<cmd>lua require('gitsigns').stage_buffer()<cr>", desc = "Stage Git buffer" }
 maps.n["<leader>gu"] = { "<cmd>lua require('gitsigns').undo_stage_hunk()<cr>", desc = "Unstage Git hunk" }
 maps.n["<leader>gd"] = { "<cmd>lua require('gitsigns').diffthis()<cr>", desc = "View Git diff" }
+maps.n['<leader>gb'] = { "<cmd>BlamerToggle<cr>", desc = "Toggle Git blame" }
 maps.n["]g"] = { "<cmd>lua require('gitsigns').next_hunk()", desc = "Next Git hunk" }
 maps.n["[g"] = { "<cmd>lua require('gitsigns').prev_hunk()<cr>", desc = "Previous Git hunk" }
 
