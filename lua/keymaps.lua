@@ -8,6 +8,7 @@ local sections = {
     l = { desc = "LSP" },
     b = { desc = "Buffer" },
     o = { desc = "Custom" },
+    c = { desc = "Copilot" },
 }
 
 -- Standart --
@@ -71,8 +72,8 @@ maps.n["<leader>gS"] = { "<cmd>lua require('gitsigns').stage_buffer()<cr>", desc
 maps.n["<leader>gu"] = { "<cmd>lua require('gitsigns').undo_stage_hunk()<cr>", desc = "Unstage Git hunk" }
 maps.n["<leader>gd"] = { "<cmd>lua require('gitsigns').diffthis()<cr>", desc = "View Git diff" }
 maps.n['<leader>gb'] = { "<cmd>BlamerToggle<cr>", desc = "Toggle Git blame" }
-maps.n["]g"] = { "<cmd>lua require('gitsigns').next_hunk()", desc = "Next Git hunk" }
-maps.n["[g"] = { "<cmd>lua require('gitsigns').prev_hunk()<cr>", desc = "Previous Git hunk" }
+maps.n["<leader>gj"] = { "<cmd>lua require('gitsigns').next_hunk()<cr>", desc = "Next Git hunk" }
+maps.n["<leader>gk"] = { "<cmd>lua require('gitsigns').prev_hunk()<cr>", desc = "Previous Git hunk" }
 
 -- Comment
 maps.n["<leader>/"] = { "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", desc = "Toggle comment line" }
@@ -129,5 +130,11 @@ maps.n["<leader>o"] = sections.o
 maps.n["<leader>ov"] = { "<cmd>Lspsaga outline<cr>", desc = "Show Outline" }
 maps.n["<leader>og"] = { "<cmd>Telescope treesitter<cr>", desc = "Goto" }
 maps.n["<leader>od"] = { "<cmd>Lspsaga show_line_diagnostics<cr>", desc = "Show Diagnostics" }
+
+-- Copilot
+maps.n['<leader>c'] = sections.c
+maps.n['<leader>co'] = { '<cmd>CopilotChatToggle<cr>', desc = 'Open/Close CopilotChat' }
+maps.n['<leader>ce'] = { '<cmd>CopilotChatExplain<cr>', desc = 'Explain code by Copilot' }
+maps.n['<leader>cf'] = { '<cmd>CopilotChatFix<cr>', desc = 'Fix code by Copilot' }
 
 utils.set_mappings(maps)

@@ -37,10 +37,10 @@ function M.config()
     local lspconfig = require "lspconfig"
     local on_attach = function(client, bufnr)
         lsp_keymaps(bufnr)
-        if client.name == 'ruff_lsp' then
+        if client.name == 'ruff' then
             client.server_capabilities.hoverProvider = false
         end
-        require("illuminate").on_attach(client)
+        -- require("illuminate").on_attach(client)
     end
 
     for _, server in pairs(require("utils").servers) do
