@@ -82,7 +82,6 @@ export CPPFLAGS="-I/opt/homebrew/opt/openjdk@11/include"
 
 
 eval "$(fzf --zsh)"
-[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -100,6 +99,7 @@ conda activate dev
 unset __conda_setup
 # <<< conda initialize <<<
 
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 # pnpm
 export PNPM_HOME="/Users/jiaoew/Library/pnpm"
 case ":$PATH:" in
