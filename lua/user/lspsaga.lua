@@ -7,24 +7,32 @@ function M.config()
     lspsaga.setup({
         symbol_in_winbar = {
             enable = true,
-            separator = '  ',
+            separator = '  ',
             hide_keyword = true,
             show_file = true,
             folder_level = 2,
-            respect_root = false,
             color_mode = true,
         },
-        max_preview_lines = 100,
-        finder_action_keys = {
-            open = "<cr>",
-            vsplit = "v",
-            split = "s",
-            tabe = "t",
-            quit = "q",
+        ui = {
+            border = "rounded",
+        },
+        lightbulb = {
+            enable = false,
         },
         outline = {
-            jump = "<CR>",
             layout = "normal",
+            keys = {
+                jump = "<CR>",
+            },
+        },
+        finder = {
+            keys = {
+                edit = "<CR>",
+                vsplit = "v",
+                split = "s",
+                tabe = "t",
+                quit = "q",
+            },
         },
     })
 end

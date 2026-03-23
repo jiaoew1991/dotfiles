@@ -5,8 +5,8 @@ local M = {
 }
 
 vim.o.foldcolumn = 'auto'
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = -1
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
 function M.config()
@@ -18,17 +18,14 @@ function M.config()
         end
     })
 
-    local which_key = require("which-key")
-
-    local opts = { mode = "n", noremap = true, silent = true }
-    local mappings = {
-        ["zR"] = { require('ufo').openAllFolds, 'Open all folds' },
-        ["zM"] = { require('ufo').closeAllFolds, 'Close all folds' },
-        ["zr"] = { require('ufo').openFoldsExceptKinds, 'Open folds expect kinds' },
-        ["zm"] = { require('ufo').closeFoldsWith, 'Close folds with' },
-        ["zc"] = { "<cmd>foldclose<CR>", "Close fold" },
-    }
-    which_key.register(mappings, opts)
+    local wk = require("which-key")
+    wk.add({
+        { "zR", ufo.openAllFolds, desc = "Open all folds" },
+        { "zM", ufo.closeAllFolds, desc = "Close all folds" },
+        { "zr", ufo.openFoldsExceptKinds, desc = "Open folds except kinds" },
+        { "zm", ufo.closeFoldsWith, desc = "Close folds with" },
+        { "zc", "<cmd>foldclose<CR>", desc = "Close fold" },
+    })
 end
 
 return M

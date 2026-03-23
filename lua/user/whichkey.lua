@@ -1,12 +1,11 @@
 local M = {
     "folke/which-key.nvim",
-    commit = "v3.13.2",
     event = "VeryLazy",
     opts = {
         icons = {
-            group = "", -- symbol prepended to a group
+            group = "",
         },
-    }
+    },
 }
 
 function M.config(_, opts)

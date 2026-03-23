@@ -5,8 +5,26 @@ M.which_key_register = function()
         local wk_avail, wk = pcall(require, "which-key")
         if wk_avail then
             for mode, registration in pairs(M.which_key_queue) do
-                -- print("register " .. vim.inspect(registration))
-                wk.register(registration, { mode = mode })
+                local mappings = {}
+                for keymap, opts in pairs(registration) do
+                    if type(opts) == "table" then
+                        local mapping = { keymap, mode = mode }
+                        if opts[1] then
+                            mapping[1] = keymap
+                            mapping[2] = opts[1]
+                        end
+                        if opts.desc or opts.name then
+                            mapping.desc = opts.desc or opts.name
+                        end
+                        if opts[2] and type(opts[2]) == "string" then
+                            mapping.desc = opts[2]
+                        end
+                        table.insert(mappings, mapping)
+                    end
+                end
+                if #mappings > 0 then
+                    wk.add(mappings)
+                end
             end
             M.which_key_queue = nil
         end
@@ -39,11 +57,8 @@ M.set_mappings = function(map_table, base)
 
                 if not cmd or keymap_opts.name then
                     if not keymap_opts.name then keymap_opts.name = keymap_opts.desc end
-                    -- print("Add which_key_queue " ..
-                        -- " mode: " .. mode .. ", keymap: " .. keymap .. " opts: " .. vim.inspect(keymap_opts))
                     M.which_key_queue[mode][keymap] = keymap_opts
                 else
-                    -- print("Add vim keymap " .. " mode: " .. mode .. ", keymap: " .. keymap .. ", cmd: " .. cmd)
                     vim.keymap.set(mode, keymap, cmd, keymap_opts)
                     M.which_key_queue[mode][keymap] = { cmd, keymap_opts.desc }
                 end

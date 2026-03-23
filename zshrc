@@ -76,9 +76,12 @@ source $ZSH/oh-my-zsh.sh
 
 alias vi=nvim
 
+# k8s aliases and AWS profile loaded from ~/.secrets
+export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
 export PATH="$HOME/go/bin:$PATH"
-export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk@11/include"
+export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export CPPFLAGS="-I$JAVA_HOME/include"
 
 
 eval "$(fzf --zsh)"
@@ -100,14 +103,16 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
-# pnpm
-export PNPM_HOME="/Users/jiaoew/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
 # rust
 . "$HOME/.cargo/env"
 # rust end
+
+# # WARP VPN 快捷命令
+# alias warp-on='warp-cli connect && echo "WARP connected - 10.x accessible"'
+# alias warp-off='warp-cli disconnect && echo "WARP disconnected - ClashX active"'
+# alias warp-status='warp-cli status'
+#
+# proxy functions loaded from ~/.secrets
+
+# Load secrets
+[ -f ~/.secrets ] && source ~/.secrets

@@ -1,8 +1,6 @@
-local fn = vim.fn
-
--- Automatically install packer
+-- Automatically install lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -16,8 +14,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " " -- make sure to set `mapleader` before lazy so your mappings are correct
 
 require("lazy").setup("user", {
-    install = { colorscheme = { require("user.colorscheme").name } },
-    defaults = { lazy = true, version = "v10.19.0" },
+    install = { colorscheme = { "rose-pine-dawn" } },
+    defaults = { lazy = true },
     ui = { wrap = "true" },
     change_detection = { enabled = true },
     debug = false,

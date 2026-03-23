@@ -1,6 +1,5 @@
 local M = {
     "hrsh7th/nvim-cmp",
-    commit = "main",
     dependencies = {
         {
             "hrsh7th/cmp-nvim-lsp",

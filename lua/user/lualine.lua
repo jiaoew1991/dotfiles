@@ -1,6 +1,5 @@
 local M = {
   "nvim-lualine/lualine.nvim",
-  commit = "0050b308552e45f7128f399886c86afefc3eb988",
   event = { "VimEnter", "InsertEnter", "BufReadPre", "BufAdd", "BufNew", "BufReadPost" },
 }
 
@@ -41,7 +40,7 @@ function M.config()
   }
 
   local spaces = function()
-    return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+    return "spaces: " .. vim.bo.shiftwidth
   end
   lualine.setup {
     options = {

@@ -1,7 +1,7 @@
 local M = {
-    "phaazon/hop.nvim",
-    branch = "v2",
-    lazy = false
+    "smoka7/hop.nvim",
+    version = "*",
+    lazy = false,
 }
 
 function M.config()
