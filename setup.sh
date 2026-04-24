@@ -16,4 +16,6 @@ link_file "$current/editorconfig" ~/.editorconfig
 link_file "$current/init.lua" ~/.config/nvim/init.lua
 link_file "$current/lua" ~/.config/nvim/lua
 link_file "$current/wezterm.lua" ~/.config/wezterm/wezterm.lua
+link_file "$current/tmux.conf" ~/.tmux.conf
+link_file "$current/ghostty/config" ~/.config/ghostty/config
 

@@ -1,0 +1,16 @@
+theme = rose-pine-dawn
+font-size = 12
+font-family = "JetBrainsMono Nerd Font"
+
+scrollback-limit = 50000
+mouse-hide-while-typing = true
+copy-on-select = clipboard
+window-save-state = always
+macos-option-as-alt = true
+
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+keybind = ctrl+semicolon>h=goto_split:left
+keybind = ctrl+semicolon>l=goto_split:right
+keybind = ctrl+semicolon>j=goto_split:bottom
+keybind = ctrl+semicolon>k=goto_split:top
