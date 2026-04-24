@@ -18,4 +18,5 @@ link_file "$current/lua" ~/.config/nvim/lua
 link_file "$current/wezterm.lua" ~/.config/wezterm/wezterm.lua
 link_file "$current/tmux.conf" ~/.tmux.conf
 link_file "$current/ghostty/config" ~/.config/ghostty/config
+link_file "$current/cmux-settings.json" ~/.config/cmux/settings.json
 
