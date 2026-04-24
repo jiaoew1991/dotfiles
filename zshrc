@@ -72,9 +72,13 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(kubectl git docker)
 
+# opencli completion
+fpath=(/Users/fanxinrong/.zsh/completions $fpath)
 source $ZSH/oh-my-zsh.sh
 
 alias vi=nvim
+export EDITOR=nvim
+export VISUAL=nvim
 
 # k8s aliases and AWS profile loaded from ~/.secrets
 export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home

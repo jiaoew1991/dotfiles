@@ -4,7 +4,7 @@ local M = {
     event = { "BufReadPre" },
     dependencies = {
         {
-            "hrsh7th/cmp-nvim-lsp",
+            "saghen/blink.cmp",
         },
         {
             "nvimdev/lspsaga.nvim",
@@ -13,11 +13,7 @@ local M = {
 }
 
 function M.config()
-    local cmp_nvim_lsp = require "cmp_nvim_lsp"
-
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+    local capabilities = require('blink.cmp').get_lsp_capabilities()
 
     local function lsp_keymaps(bufnr)
         local keymap = vim.api.nvim_buf_set_keymap
@@ -81,14 +77,6 @@ function M.config()
             prefix = "",
             suffix = "",
         },
-    })
-
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = "rounded",
-    })
-
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-        border = "rounded",
     })
 end
 

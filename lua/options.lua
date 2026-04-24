@@ -42,6 +42,7 @@ for k, v in pairs(options) do
 end
 
 
+vim.o.winborder = "rounded"
 vim.o.winwidth = 10
 vim.o.winminwidth = 10
 vim.o.equalalways = false

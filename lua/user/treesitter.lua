@@ -13,6 +13,12 @@ local M = {
 function M.config()
     local treesitter = require "nvim-treesitter"
     treesitter.install { 'rust', 'javascript', 'zig', 'typescript', 'tsx', 'lua', 'python', 'go', 'bash', 'c', 'cpp', 'json', 'yaml', 'markdown' }
+
+    vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+            pcall(vim.treesitter.start, args.buf)
+        end,
+    })
     -- local configs = require "nvim-treesitter.configs"
     --
     -- configs.setup {

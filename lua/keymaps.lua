@@ -8,7 +8,6 @@ local sections = {
     l = { desc = "LSP" },
     b = { desc = "Buffer" },
     o = { desc = "Custom" },
-    c = { desc = "Copilot" },
 }
 
 -- Standart --
@@ -130,11 +129,5 @@ maps.n["<leader>o"] = sections.o
 maps.n["<leader>ov"] = { "<cmd>Lspsaga outline<cr>", desc = "Show Outline" }
 maps.n["<leader>og"] = { "<cmd>Telescope treesitter<cr>", desc = "Goto" }
 maps.n["<leader>od"] = { "<cmd>Lspsaga show_line_diagnostics<cr>", desc = "Show Diagnostics" }
-
--- Copilot
-maps.n['<leader>c'] = sections.c
-maps.n['<leader>co'] = { '<cmd>CopilotChatToggle<cr>', desc = 'Open/Close CopilotChat' }
-maps.n['<leader>ce'] = { '<cmd>CopilotChatExplain<cr>', desc = 'Explain code by Copilot' }
-maps.n['<leader>cf'] = { '<cmd>CopilotChatFix<cr>', desc = 'Fix code by Copilot' }
 
 utils.set_mappings(maps)
